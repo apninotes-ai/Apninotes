@@ -96,24 +96,6 @@
       ]
     },
     {
-      "id": "s07",
-      "name": "Company Law",
-      "program": "B.Com (Hons)",
-      "semester": 2,
-      "category": "CORE",
-      "price": 89,
-      "mrp": 179,
-      "syllabusUrl": null,
-      "videoUrl": null,
-      "pyq": [
-        {
-          "year": 2024,
-          "session": "End Sem",
-          "url": null
-        }
-      ]
-    },
-    {
       "id": "s05",
       "name": "chemistry",
       "program": "B.Sc (Hons) Computer Science",
@@ -128,6 +110,24 @@
           "year": 2025,
           "session": "End Sem",
           "url": "https://raw.githubusercontent.com/apninotes-ai/apninotes/main/files/pyq/s05-0-2025.pdf"
+        }
+      ]
+    },
+    {
+      "id": "s07",
+      "name": "Company Law",
+      "program": "B.Com (Hons)",
+      "semester": 2,
+      "category": "CORE",
+      "price": 89,
+      "mrp": 179,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2024,
+          "session": "End Sem",
+          "url": null
         }
       ]
     },
@@ -262,24 +262,6 @@
       "pyq": [
         {
           "year": 2025,
-          "session": "End Sem",
-          "url": null
-        }
-      ]
-    },
-    {
-      "id": "s22",
-      "name": "Geomorphology",
-      "program": "B.A. (Hons) Geography",
-      "semester": 1,
-      "category": "CORE",
-      "price": 89,
-      "mrp": 179,
-      "syllabusUrl": null,
-      "videoUrl": null,
-      "pyq": [
-        {
-          "year": 2024,
           "session": "End Sem",
           "url": null
         }
