@@ -350,24 +350,6 @@
       ]
     },
     {
-      "id": "s13",
-      "name": "Management Accounting",
-      "program": "B.Com (Hons)",
-      "semester": 5,
-      "category": "CORE",
-      "price": 109,
-      "mrp": 219,
-      "syllabusUrl": null,
-      "videoUrl": null,
-      "pyq": [
-        {
-          "year": 2025,
-          "session": "End Sem",
-          "url": null
-        }
-      ]
-    },
-    {
       "id": "s18",
       "name": "Mathematical Methods for Economics",
       "program": "B.A. (Hons) Economics",
