@@ -11,15 +11,6 @@
       "mrp": 359
     },
     {
-      "id": "c01",
-      "name": "B.Com (Hons) — Semester 1 Full Combo",
-      "program": "B.Com (Hons)",
-      "semester": 1,
-      "subjectCount": 4,
-      "price": 299,
-      "mrp": 599
-    },
-    {
       "id": "c02",
       "name": "B.Com (Hons) — Semester 3 Full Combo",
       "program": "B.Com (Hons)",
