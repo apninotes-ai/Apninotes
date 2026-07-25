@@ -27,15 +27,6 @@
       "subjectCount": 3,
       "price": 249,
       "mrp": 499
-    },
-    {
-      "id": "c04",
-      "name": "Complete B.Com (Hons) — All 6 Semesters",
-      "program": "B.Com (Hons)",
-      "semester": null,
-      "subjectCount": 16,
-      "price": 1499,
-      "mrp": 2999
     }
   ]
 }
