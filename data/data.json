@@ -171,24 +171,6 @@
           "url": null
         }
       ]
-    },
-    {
-      "id": "s19",
-      "name": "Data Analysis (Digital Empowerment)",
-      "program": "B.A. (Hons) Economics",
-      "semester": 2,
-      "category": "SEC",
-      "price": 59,
-      "mrp": 119,
-      "syllabusUrl": null,
-      "videoUrl": null,
-      "pyq": [
-        {
-          "year": 2024,
-          "session": "End Sem",
-          "url": null
-        }
-      ]
     }
   ],
   "combos": [
