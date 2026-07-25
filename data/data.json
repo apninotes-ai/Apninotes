@@ -94,42 +94,6 @@
           "url": null
         }
       ]
-    },
-    {
-      "id": "s05",
-      "name": "chemistry",
-      "program": "B.Sc (Hons) Computer Science",
-      "semester": 2,
-      "category": "CORE",
-      "price": 99,
-      "mrp": 199,
-      "videoUrl": "https://www.youtube.com/watch?v=OgdjXYm-0is&list=RDzxE6btYmKF0&index=12",
-      "syllabusUrl": "https://raw.githubusercontent.com/apninotes-ai/apninotes/main/files/syllabus/s05.pdf",
-      "pyq": [
-        {
-          "year": 2025,
-          "session": "End Sem",
-          "url": "https://raw.githubusercontent.com/apninotes-ai/apninotes/main/files/pyq/s05-0-2025.pdf"
-        }
-      ]
-    },
-    {
-      "id": "s07",
-      "name": "Company Law",
-      "program": "B.Com (Hons)",
-      "semester": 2,
-      "category": "CORE",
-      "price": 89,
-      "mrp": 179,
-      "syllabusUrl": null,
-      "videoUrl": null,
-      "pyq": [
-        {
-          "year": 2024,
-          "session": "End Sem",
-          "url": null
-        }
-      ]
     }
   ],
   "combos": [
