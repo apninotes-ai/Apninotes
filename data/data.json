@@ -1,14 +1,4 @@
 {
   "subjects": [],
-  "combos": [
-    {
-      "id": "c03",
-      "name": "B.A. (Hons) Economics — Semester 1 Combo",
-      "program": "B.A. (Hons) Economics",
-      "semester": 1,
-      "subjectCount": 2,
-      "price": 179,
-      "mrp": 359
-    }
-  ]
+  "combos": []
 }
