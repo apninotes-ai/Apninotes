@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ApniNotes — Notes, PYQs, Courses & Societies for DU Students</title>
+<meta name="description" content="ApniNotes — chapter-wise notes, solved PYQs, full syllabus and DU society directory, all in one place. Built for Delhi University students.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   APNINOTES — DESIGN TOKENS
+   Brand palette + type taken directly from the ApniNotes brand sheet.
+   ============================================================ */
+:root{
+  --purple-950:#0D0D17;   /* near-black bg (brand) */
+  --purple-900:#1A1A2E;   /* dark navy-purple bg (brand) */
+  --purple-700:#5B2FE0;
+  --purple-600:#7B4DFF;   /* primary (brand) */
+  --purple-500:#A56DFF;   /* secondary (brand) */
+  --purple-200:#D6BBFF;   /* light lavender (brand) */
+  --purple-100:#EDE3FF;
+  --purple-50:#F6F2FF;
+  --white:#FFFFFF;
+  --ink:#1A1A2E;
+  --muted:#6E6B84;
+  --muted-light:#9A97AD;
+  --line:#E9E3FB;
+  --success-bg:#E4F9EE;
+  --success:#189A5C;
+  --gold:#F6B93B;
+  --danger:#E0455A;
+
+  --font-display:'Poppins',sans-serif;
+  --font-body:'Inter',sans-serif;
+
+  --radius-sm:10px;
+  --radius-md:16px;
+  --radius-lg:24px;
+  --radius-pill:999px;
+
+  --shadow-sm:0 2px 10px rgba(26,26,46,0.06);
+  --shadow-md:0 10px 30px rgba(123,77,255,0.14);
+  --shadow-lg:0 20px 50px rgba(13,13,23,0.35);
+
+  --container:1180px;
+  --header-h:72px;
+  --bottomnav-h:64px;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:var(--white);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+}
+h1,h2,h3,h4{
+  font-family:var(--font-display);
+  margin:0 0 .5em 0;
+  line-height:1.15;
+  letter-spacing:-0.01em;
+}
+p{margin:0 0 1em 0;}
+a{color:inherit;text-decoration:none;}
+button{font-family:var(--font-body);cursor:pointer;}
+ul{margin:0;padding:0;list-style:none;}
+img{max-width:100%;display:block;}
+input,select,button{font-size:1rem;}
+:focus-visible{outline:3px solid var(--purple-500);outline-offset:2px;}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important;}
+}
+
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;}
+.eyebrow{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:.78rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--purple-600);
+}
+.section-pad{padding:88px 0;}
+@media (max-width:768px){.section-pad{padding:56px 0;}}
+
+/* ============ PAPER-FOLD SIGNATURE MOTIF ============
+   Echoes the ApniNotes logo's folded-corner "A" mark.
+   Applied to cards/panels as a quiet, recurring signature. */
+.fold{position:relative;}
+.fold::after{
+  content:"";
+  position:absolute;
+  top:0; right:0;
+  width:22px; height:22px;
+  background:linear-gradient(135deg, transparent 50%, rgba(255,255,255,.75) 50%);
+  border-bottom-left-radius:6px;
+  pointer-events:none;
+}
+.fold-dark::after{
+  background:linear-gradient(135deg, transparent 50%, rgba(123,77,255,.28) 50%);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:var(--font-display);font-weight:600;font-size:.95rem;
+  padding:13px 24px;border-radius:var(--radius-pill);border:none;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  white-space:nowrap;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{
+  background:linear-gradient(135deg,var(--purple-600),var(--purple-700));
+  color:var(--white);
+  box-shadow:var(--shadow-md);
+}
+.btn-primary:hover{box-shadow:0 14px 34px rgba(123,77,255,.28);}
+.btn-dark{
+  background:linear-gradient(135deg,var(--purple-900),var(--purple-950));
+  color:var(--white);
+}
+.btn-outline{
+  background:transparent;color:var(--purple-700);
+  border:1.5px solid var(--purple-200);
+}
+.btn-outline:hover{border-color:var(--purple-600);background:var(--purple-50);}
+.btn-white{background:var(--white);color:var(--purple-700);box-shadow:var(--shadow-sm);}
+.btn-sm{padding:9px 16px;font-size:.82rem;border-radius:var(--radius-pill);}
+.btn-block{width:100%;}
+.btn[disabled]{opacity:.5;cursor:not-allowed;}
+
+/* ============================================================
+   BADGES / CHIPS
+   ============================================================ */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.72rem;font-weight:600;font-family:var(--font-display);
+  padding:4px 11px;border-radius:var(--radius-pill);
+  background:var(--purple-100);color:var(--purple-700);
+  white-space:nowrap;
+}
+.chip-off{background:var(--success-bg);color:var(--success);}
+.chip-free{background:#FFEFD1;color:#9A6100;}
+.chip-dark{background:rgba(255,255,255,.14);color:var(--white);}
+
+/* ============================================================
+   HEADER / TOP NAV
+   ============================================================ */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  height:var(--header-h);
+  background:rgba(13,13,23,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.site-header .container{
+  height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand svg{width:34px;height:34px;flex-shrink:0;}
+.brand-word{font-family:var(--font-display);font-weight:700;font-size:1.28rem;color:var(--white);}
+.brand-word span{color:var(--purple-500);}
+
+.top-nav{display:flex;align-items:center;gap:4px;}
+.top-nav a{
+  font-family:var(--font-display);font-weight:500;font-size:.92rem;
+  color:rgba(255,255,255,.72);padding:10px 16px;border-radius:var(--radius-pill);
+  transition:background .15s ease,color .15s ease;
+}
+.top-nav a:hover{color:var(--white);background:rgba(255,255,255,.06);}
+.top-nav a.active{color:var(--white);background:var(--purple-600);}
+.header-cta{display:flex;align-items:center;gap:10px;}
+@media (max-width:860px){
+  .top-nav{display:none;}
+  .header-cta .btn-primary span.long{display:none;}
+}
+
+/* Mobile bottom tab bar — mirrors the ApniNotes app's own nav pattern */
+.bottom-tabbar{
+  display:none;
+}
+@media (max-width:860px){
+  .bottom-tabbar{
+    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:100;
+    background:var(--white);border-top:1px solid var(--line);
+    box-shadow:0 -8px 24px rgba(13,13,23,.08);
+    height:var(--bottomnav-h);
+  }
+  .bottom-tabbar a{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    font-size:.66rem;font-weight:600;font-family:var(--font-display);color:var(--muted-light);
+  }
+  .bottom-tabbar a svg{width:21px;height:21px;stroke:var(--muted-light);}
+  .bottom-tabbar a.active{color:var(--purple-600);}
+  .bottom-tabbar a.active svg{stroke:var(--purple-600);}
+  body{padding-bottom:var(--bottomnav-h);}
+}
+
+/* ============================================================
+   PAGE / ROUTING
+   ============================================================ */
+.page{display:none;animation:fadeUp .4s ease;}
+.page.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ============================================================
+   SEARCH BAR
+   ============================================================ */
+.searchbar{
+  position:relative;display:flex;align-items:center;gap:10px;
+  background:var(--white);border-radius:var(--radius-pill);
+  padding:15px 20px;box-shadow:var(--shadow-md);
+}
+.searchbar svg{width:19px;height:19px;stroke:var(--purple-600);flex-shrink:0;}
+.searchbar input{
+  border:none;outline:none;flex:1;background:transparent;color:var(--ink);font-size:.95rem;
+}
+.searchbar input::placeholder{color:var(--muted-light);}
+.searchbar .clear-btn{
+  width:22px;height:22px;border-radius:50%;background:var(--purple-100);color:var(--purple-700);
+  border:none;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.searchbar.on-dark{box-shadow:0 10px 30px rgba(0,0,0,.25);}
+
+/* Autocomplete dropdown (used by Societies college search) */
+.autocomplete-panel{
+  position:absolute;top:calc(100% + 8px);left:0;right:0;
+  background:var(--white);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);
+  max-height:320px;overflow-y:auto;z-index:20;display:none;border:1px solid var(--line);
+}
+.autocomplete-panel.show{display:block;}
+.autocomplete-panel button{
+  width:100%;text-align:left;background:none;border:none;padding:13px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  font-size:.9rem;color:var(--ink);border-bottom:1px solid var(--line);
+}
+.autocomplete-panel button:last-child{border-bottom:none;}
+.autocomplete-panel button:hover{background:var(--purple-50);}
+.autocomplete-panel button .campus-tag{font-size:.7rem;color:var(--muted-light);font-weight:500;}
+.autocomplete-panel mark{background:var(--purple-200);color:var(--purple-900);border-radius:3px;padding:0 2px;}
+
+/* ============================================================
+   TABS / TOGGLES / FILTER PILLS
+   ============================================================ */
+.toggle-row{display:flex;gap:12px;}
+.toggle-btn{
+  flex:1;text-align:left;padding:14px 18px;border-radius:var(--radius-md);
+  border:1.5px solid var(--purple-200);background:var(--purple-50);
+  font-family:var(--font-display);color:var(--purple-700);transition:all .15s ease;
+}
+.toggle-btn strong{display:block;font-size:.95rem;}
+.toggle-btn small{display:block;font-weight:400;font-size:.74rem;opacity:.8;margin-top:2px;}
+.toggle-btn.active{
+  background:linear-gradient(135deg,var(--purple-900),var(--purple-950));
+  border-color:transparent;color:var(--white);
+}
+
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;}
+.pill-btn{
+  padding:9px 18px;border-radius:var(--radius-pill);border:1.5px solid var(--line);
+  background:var(--white);font-family:var(--font-display);font-weight:600;font-size:.82rem;color:var(--muted);
+}
+.pill-btn.active{background:var(--purple-600);border-color:var(--purple-600);color:var(--white);}
+
+.tab-row{display:flex;gap:10px;}
+.tab-btn{
+  flex:1;padding:12px;border-radius:var(--radius-pill);border:none;
+  font-family:var(--font-display);font-weight:600;font-size:.9rem;
+  background:var(--purple-50);color:var(--purple-700);
+}
+.tab-btn.active{background:var(--purple-900);color:var(--white);}
+
+select.plain-select{
+  border:1.5px solid var(--line);border-radius:var(--radius-md);padding:12px 14px;
+  background:var(--white);color:var(--ink);font-family:var(--font-body);
+}
+
+/* ============================================================
+   CARDS — subjects / combos / resources / societies
+   ============================================================ */
+.card-list{display:flex;flex-direction:column;gap:12px;}
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+
+.item-card{
+  display:flex;align-items:center;gap:14px;
+  background:var(--purple-50);border-radius:var(--radius-md);
+  padding:14px;transition:transform .15s ease, box-shadow .15s ease;
+}
+.item-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+.item-card.featured{
+  background:linear-gradient(135deg,var(--purple-900),var(--purple-950));
+  color:var(--white);
+}
+.item-icon{
+  width:46px;height:46px;border-radius:13px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--purple-500),var(--purple-600));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(123,77,255,.35);
+}
+.item-icon svg{width:22px;height:22px;stroke:var(--white);}
+.item-body{flex:1;min-width:0;}
+.item-body .name{font-family:var(--font-display);font-weight:600;font-size:.95rem;margin:0 0 3px 0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.item-card.featured .item-body .name{color:var(--white);}
+.item-meta{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--muted);flex-wrap:wrap;}
+.item-card.featured .item-meta{color:rgba(255,255,255,.65);}
+.item-price{text-align:right;flex-shrink:0;}
+.item-price .now{font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--purple-700);}
+.item-card.featured .item-price .now{color:var(--white);}
+.item-price .was{font-size:.74rem;color:var(--muted-light);text-decoration:line-through;display:block;}
+.open-btn{
+  padding:9px 20px;border-radius:var(--radius-pill);border:none;
+  background:linear-gradient(135deg,var(--purple-900),var(--purple-950));color:var(--white);
+  font-family:var(--font-display);font-weight:600;font-size:.8rem;flex-shrink:0;
+}
+
+.empty-state{
+  text-align:center;padding:56px 24px;background:var(--purple-50);border-radius:var(--radius-lg);
+  color:var(--muted);
+}
+.empty-state svg{width:44px;height:44px;stroke:var(--purple-300,var(--purple-500));margin:0 auto 14px auto;display:block;}
+.empty-state h4{color:var(--ink);margin-bottom:6px;}
+.empty-state p{margin-bottom:16px;font-size:.9rem;}
+
+/* Society / college result cards */
+.college-hit{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:16px 18px;background:var(--white);border:1.5px solid var(--line);border-radius:var(--radius-md);
+}
+.college-hit:hover{border-color:var(--purple-300,var(--purple-500));}
+.college-hit .cname{font-family:var(--font-display);font-weight:600;font-size:.95rem;}
+.college-hit .ccampus{font-size:.76rem;color:var(--muted-light);}
+
+.society-card{
+  background:var(--white);border:1.5px solid var(--line);border-radius:var(--radius-md);
+  padding:18px;transition:box-shadow .15s ease, transform .15s ease;
+}
+.society-card:hover{box-shadow:var(--shadow-sm);transform:translateY(-2px);}
+.society-card .sname{font-family:var(--font-display);font-weight:600;font-size:.98rem;margin-bottom:4px;}
+.society-card .stag{font-size:.76rem;color:var(--purple-600);font-weight:600;}
+.society-card p{font-size:.83rem;color:var(--muted);margin:10px 0 0 0;}
+
+/* ============================================================
+   STAT BLOCKS (Home)
+   ============================================================ */
+.stats-strip{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  background:var(--purple-950);border-radius:var(--radius-lg);overflow:hidden;
+}
+.stat-block{padding:28px 14px;text-align:center;border-right:1px solid rgba(255,255,255,.08);}
+.stat-block:last-child{border-right:none;}
+.stat-block .num{font-family:var(--font-display);font-weight:800;font-size:1.7rem;color:var(--white);}
+.stat-block .lbl{font-size:.72rem;color:rgba(255,255,255,.55);margin-top:4px;}
+@media (max-width:768px){
+  .stats-strip{grid-template-columns:repeat(2,1fr);}
+  .stat-block{border-right:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);}
+  .stat-block:nth-child(2n){border-right:none;}
+}
+
+.two-col-stack{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+.get-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media (max-width:860px){
+  .two-col-stack{grid-template-columns:1fr;}
+}
+@media (max-width:480px){
+  .get-grid{grid-template-columns:1fr;}
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(13,13,23,.6);backdrop-filter:blur(3px);
+  display:none;align-items:center;justify-content:center;z-index:1000;padding:20px;
+}
+.modal-overlay.show{display:flex;}
+.modal-box{
+  background:var(--white);border-radius:var(--radius-lg);max-width:560px;width:100%;
+  max-height:88vh;overflow-y:auto;position:relative;box-shadow:var(--shadow-lg);
+}
+.modal-box.wide{max-width:720px;}
+.modal-close{
+  position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;
+  background:rgba(13,13,23,.06);border:none;display:flex;align-items:center;justify-content:center;z-index:5;
+}
+.modal-close svg{width:18px;height:18px;}
+.modal-hero{
+  background:linear-gradient(135deg,var(--purple-900),var(--purple-950));
+  padding:32px 28px 24px 28px;color:var(--white);border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+}
+.modal-body{padding:24px 28px 28px 28px;}
+.modal-pdf-frame{width:100%;height:60vh;border:none;background:var(--purple-50);}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer{background:var(--purple-950);color:rgba(255,255,255,.6);padding:52px 0 26px 0;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;}
+.footer-grid h5{color:var(--white);font-family:var(--font-display);font-size:.85rem;margin-bottom:14px;}
+.footer-grid a{display:block;padding:5px 0;font-size:.86rem;color:rgba(255,255,255,.55);}
+.footer-grid a:hover{color:var(--white);}
+.footer-bottom{
+  margin-top:36px;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.78rem;
+}
+@media (max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}}
+
+/* ============================================================
+   MISC UTILITIES
+   ============================================================ */
+.grad-text{
+  background:linear-gradient(135deg,var(--purple-600),var(--purple-500));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.note-banner{
+  background:linear-gradient(135deg,var(--purple-100),var(--purple-50));
+  border:1px dashed var(--purple-300,var(--purple-500));
+  border-radius:var(--radius-md);padding:14px 18px;font-size:.82rem;color:var(--purple-700);
+}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:var(--purple-200);border-radius:8px;}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER / TOP NAV
+     ============================================================ -->
+<header class="site-header">
+  <div class="container">
+    <a href="#home" class="brand" data-route="home">
+      <img src="assets/logo.png" alt="ApniNotes logo" style="height:38px;width:auto;">
+      <span class="brand-word">Apni<span>Notes</span></span>
+    </a>
+    <nav class="top-nav" aria-label="Primary">
+      <a href="#home" data-route="home" class="active">Home</a>
+      <a href="#courses" data-route="courses">Courses</a>
+      <a href="#free-resources" data-route="free-resources">Free Resources</a>
+      <a href="#societies" data-route="societies">Societies</a>
+      <a href="#contact" data-route="contact">Contact Us</a>
+    </nav>
+    <div class="header-cta">
+      <button class="btn btn-primary btn-sm" onclick="buyOnApp('header')">
+        <span class="long">Get the App</span><span>→</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile bottom tab bar — mirrors the ApniNotes app's own bottom nav -->
+<nav class="bottom-tabbar" aria-label="Primary mobile">
+  <a href="#home" data-route="home" class="active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </a>
+  <a href="#courses" data-route="courses">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    Courses
+  </a>
+  <a href="#free-resources" data-route="free-resources">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    Resources
+  </a>
+  <a href="#societies" data-route="societies">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Societies
+  </a>
+  <a href="#contact" data-route="contact">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-3.8 7.6 8.5 8.5 0 0 1-7.8.5L3 21l1.4-6.3a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.5-8.4h.3a8.5 8.5 0 0 1 8.5 8.4z"/></svg>
+    Contact
+  </a>
+</nav>
+
+<main>
+
+<!-- ============================================================
+     HOME
+     ============================================================ -->
+<section id="home" class="page active">
+
+  <div style="background:radial-gradient(ellipse at 20% -10%, rgba(165,109,255,.35), transparent 55%), radial-gradient(ellipse at 90% 10%, rgba(246,185,59,.18), transparent 45%), var(--purple-950); color:var(--white); padding:76px 0 64px 0;">
+    <div class="container">
+      <p class="eyebrow" style="color:var(--purple-500);">Made for Delhi University Students</p>
+      <h1 style="font-size:clamp(2.1rem,5vw,3.4rem); color:var(--white); max-width:14ch;">Study Smarter. <span class="grad-text" style="background:linear-gradient(135deg,#A56DFF,#F6B93B);-webkit-background-clip:text;background-clip:text;">Score Higher.</span></h1>
+      <p style="max-width:52ch; font-size:1.05rem; color:rgba(255,255,255,.72);">
+        Chapter-wise notes, solved PYQs and the complete syllabus for every DU course — plus a searchable directory of your college's societies. Everything a DU student needs, in one place.
+      </p>
+      <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:28px;">
+        <a href="#courses" data-route="courses" class="btn btn-primary">Explore Courses</a>
+        <a href="#free-resources" data-route="free-resources" class="btn" style="background:rgba(255,255,255,.08); color:var(--white); border:1.5px solid rgba(255,255,255,.2);">Browse Free PYQs & Syllabus</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top:-34px; position:relative; z-index:2;">
+    <div class="stats-strip">
+      <div class="stat-block"><div class="num">10,000+</div><div class="lbl">Members Joined</div></div>
+      <div class="stat-block"><div class="num">10+</div><div class="lbl">Courses Covered</div></div>
+      <div class="stat-block"><div class="num">6</div><div class="lbl">Semesters</div></div>
+      <div class="stat-block"><div class="num">100+</div><div class="lbl">Solved PYQ Papers</div></div>
+      <div class="stat-block"><div class="num">4.8★</div><div class="lbl">Student Rating</div></div>
+    </div>
+  </div>
+
+  <div class="section-pad">
+    <div class="container">
+      <p class="eyebrow">What ApniNotes Gives You</p>
+      <h2 style="font-size:2rem; max-width:16ch;">Everything you need to crack your exam</h2>
+      <p style="max-width:60ch; color:var(--muted);">No more hunting through random PDFs — notes, PYQs and the syllabus stay organised, searchable and right where you need them.</p>
+      <div class="grid-cards" style="margin-top:28px;">
+
+        <div class="item-card fold" style="align-items:flex-start;">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <div class="item-body"><p class="name" style="white-space:normal;">Unit-wise Detailed Notes</p><p style="font-size:.83rem; color:var(--muted); margin:0;">Every topic explained in simple language with real examples, so you understand it — not just memorise it.</p></div>
+        </div>
+
+        <div class="item-card fold" style="align-items:flex-start;">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="item-body"><p class="name" style="white-space:normal;">Unit-wise Revision Notes</p><p style="font-size:.83rem; color:var(--muted); margin:0;">Short, to-the-point notes with only the key points, made for a fast revision pass before the exam.</p></div>
+        </div>
+
+        <div class="item-card fold" style="align-items:flex-start;">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <div class="item-body"><p class="name" style="white-space:normal;">NEP-Based Solved PYQs</p><p style="font-size:.83rem; color:var(--muted); margin:0;">The last two years of previous year papers, solved in the format examiners actually expect.</p></div>
+        </div>
+
+        <div class="item-card fold" style="align-items:flex-start;">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
+          <div class="item-body"><p class="name" style="white-space:normal;">Important Topics</p><p style="font-size:.83rem; color:var(--muted); margin:0;">The topics with the highest chance of appearing in your exam, so your prep time goes further.</p></div>
+        </div>
+
+        <div class="item-card fold" style="align-items:flex-start;">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div class="item-body"><p class="name" style="white-space:normal;">Top 30 Repeated Questions</p><p style="font-size:.83rem; color:var(--muted); margin:0;">The questions that keep showing up, exam after exam — prepare these first.</p></div>
+        </div>
+
+        <div class="item-card fold" style="align-items:flex-start;">
+          <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+          <div class="item-body"><p class="name" style="white-space:normal;">Semester Roadmap</p><p style="font-size:.83rem; color:var(--muted); margin:0;">A clear week-by-week plan for what to study and when, so you finish the syllabus on time.</p></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="section-pad" style="background:var(--purple-50);">
+    <div class="container">
+      <div class="two-col-stack">
+        <div>
+          <p class="eyebrow">Applications Open · Limited Seats</p>
+          <h2 style="font-size:2.1rem;">Become the Face of ApniNotes in Your College</h2>
+          <p style="color:var(--muted); font-size:1rem;">Lead. Build your personal brand. Create real impact.</p>
+          <p style="color:var(--muted);">
+            Join the <strong>ApniNotes Student Leadership Program 2026</strong> and be part of a movement helping thousands of students learn, grow and succeed — while you build your own name on campus along the way.
+          </p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
+            <a id="leadershipApplyBtn" href="#" target="_blank" rel="noopener" class="btn btn-primary">Apply Now →</a>
+            <a id="leadershipWaBtn" href="https://whatsapp.com/channel/0029Vb4IpYP65yDHsuVNDn2D" target="_blank" rel="noopener" class="btn btn-outline">Join WhatsApp Community</a>
+          </div>
+          <p class="note-banner" style="margin-top:16px;">Apply button currently points to a placeholder — swap in your real Google Form / applications link (see <code>CONFIG.leadershipApplyUrl</code> in the script).</p>
+        </div>
+        <div class="fold" style="border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-lg);">
+          <img src="assets/leadership-poster.jpg" alt="ApniNotes Student Leadership Program 2026 — become the face of ApniNotes in your college" style="width:100%; display:block;">
+        </div>
+      </div>
+
+      <div class="two-col-stack" style="margin-top:56px; align-items:start;">
+        <div>
+          <h3 style="font-size:1.3rem;">Why join?</h3>
+          <div style="display:flex; flex-direction:column; gap:18px; margin-top:16px;">
+            <div style="display:flex; gap:14px;">
+              <div class="item-icon" style="flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+              <div><strong style="font-family:var(--font-display);">Represent India's fastest-growing student brand</strong><p style="font-size:.87rem; margin:2px 0 0 0;">Be the face of ApniNotes on your campus.</p></div>
+            </div>
+            <div style="display:flex; gap:14px;">
+              <div class="item-icon" style="flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+              <div><strong style="font-family:var(--font-display);">Build your personal brand with our support</strong><p style="font-size:.87rem; margin:2px 0 0 0;">Get guidance and resources to build your online presence.</p></div>
+            </div>
+            <div style="display:flex; gap:14px;">
+              <div class="item-icon" style="flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div><strong style="font-family:var(--font-display);">Connect with student leaders across colleges</strong><p style="font-size:.87rem; margin:2px 0 0 0;">Network with ambitious students and build lasting connections.</p></div>
+            </div>
+            <div style="display:flex; gap:14px;">
+              <div class="item-icon" style="flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div><strong style="font-family:var(--font-display);">Learn, share &amp; grow with an exclusive community</strong><p style="font-size:.87rem; margin:2px 0 0 0;">Collaborate, exchange ideas and grow together.</p></div>
+            </div>
+            <div style="display:flex; gap:14px;">
+              <div class="item-icon" style="flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+              <div><strong style="font-family:var(--font-display);">Create real impact on your campus</strong><p style="font-size:.87rem; margin:2px 0 0 0;">Organise events, help students and drive positive change.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="font-size:1.3rem;">What you'll get</h3>
+          <div class="get-grid" style="margin-top:16px;">
+            <div class="society-card"><div class="stag">01</div><div class="sname">Certificate of Excellence</div><p>Official recognition for your contribution and impact.</p></div>
+            <div class="society-card"><div class="stag">02</div><div class="sname">Free Access to Premium Courses</div><p>Learn and upskill with our best resources, completely free.</p></div>
+            <div class="society-card"><div class="stag">03</div><div class="sname">Internship &amp; Core Team Opportunity</div><p>Top performers get a chance to work closely with the team.</p></div>
+            <div class="society-card"><div class="stag">04</div><div class="sname">Founder Mentorship</div><p>Career and life guidance to help you grow.</p></div>
+            <div class="society-card"><div class="stag">05</div><div class="sname">LinkedIn Recognition</div><p>Get featured on our LinkedIn and showcase your work.</p></div>
+            <div class="society-card"><div class="stag">06</div><div class="sname">Top Performer Recognition</div><p>Rewards, shoutouts and exclusive goodies.</p></div>
+            <div class="society-card"><div class="stag">07</div><div class="sname">Letter of Recommendation</div><p>For top-performing student leaders.</p></div>
+            <div class="society-card"><div class="stag">08</div><div class="sname">Exclusive Community</div><p>Join a network of like-minded student leaders.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     COURSES  (main focus of the site — mirrors the app's browsing UI)
+     ============================================================ -->
+<section id="courses" class="page">
+  <div style="background:var(--purple-950); padding:44px 0 90px 0;">
+    <div class="container">
+      <p class="eyebrow" style="color:var(--purple-500);">Courses</p>
+      <h1 style="color:var(--white); font-size:clamp(1.7rem,4vw,2.4rem);">Find your subject. Unlock it in one tap.</h1>
+      <p style="color:rgba(255,255,255,.65); max-width:56ch;">Browse every subject we cover — no app download needed to look around. When you're ready to buy, we'll hand you straight to the ApniNotes app.</p>
+      <div class="searchbar on-dark" style="max-width:560px; margin-top:22px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="courseSearchInput" placeholder="Search subjects, e.g. Financial Accounting">
+        <button class="clear-btn" onclick="document.getElementById('courseSearchInput').value='';filterCourses();" aria-label="Clear search">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top:-56px; position:relative; z-index:2;">
+    <div style="background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); padding:24px;">
+      <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+        <select id="programSelect" class="plain-select" onchange="filterCourses()">
+          <option value="">All Programmes</option>
+        </select>
+        <div class="pill-row" id="semesterPills"></div>
+      </div>
+      <div class="pill-row" id="categoryPills" style="margin-top:14px;"></div>
+    </div>
+  </div>
+
+  <div class="section-pad" style="padding-top:40px;">
+    <div class="container">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px;">
+        <h2 style="font-size:1.4rem;">Subjects</h2>
+        <span id="subjectsCount" style="font-size:.85rem; color:var(--muted);"></span>
+      </div>
+      <div id="subjectsList" class="card-list"></div>
+      <div id="subjectsEmpty" class="empty-state" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <h4>No subjects match that search</h4>
+        <p>Try a different subject name, or clear the semester / category filters.</p>
+      </div>
+
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin:48px 0 16px 0;">
+        <h2 style="font-size:1.4rem;">Combo Subjects <span class="chip">Save more</span></h2>
+      </div>
+      <div id="combosList" class="card-list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FREE RESOURCES  (PYQs + Syllabus)
+     ============================================================ -->
+<section id="free-resources" class="page">
+  <div style="background:linear-gradient(135deg,var(--purple-700),var(--purple-900)); padding:44px 0 34px 0;">
+    <div class="container">
+      <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <p class="eyebrow" style="color:var(--purple-200); margin:0;">Free Resources</p>
+        <span class="chip chip-free">100% Free 🎁</span>
+      </div>
+      <h1 style="color:var(--white); font-size:clamp(1.7rem,4vw,2.2rem); margin-top:6px;">PYQs &amp; Syllabus for every DU subject</h1>
+      <div class="searchbar" style="max-width:560px; margin-top:18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="resourceSearchInput" placeholder="Search subject or course name">
+        <button class="clear-btn" onclick="document.getElementById('resourceSearchInput').value='';filterResources();" aria-label="Clear search">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:26px;">
+    <div class="toggle-row">
+      <button class="toggle-btn active" id="tabPyqBtn" onclick="setResourceTab('pyq')">
+        <strong>📋 PYQ Papers</strong><small>Previous Year Qs</small>
+      </button>
+      <button class="toggle-btn" id="tabSyllabusBtn" onclick="setResourceTab('syllabus')">
+        <strong>📖 Syllabus</strong><small>Complete syllabus</small>
+      </button>
+    </div>
+
+    <div style="display:flex; gap:24px; flex-wrap:wrap; margin-top:20px; align-items:center;">
+      <div>
+        <p style="font-size:.78rem; font-weight:600; color:var(--muted); margin:0 0 6px 0;">Choose your semester</p>
+        <div class="pill-row" id="resourceSemesterPills"></div>
+      </div>
+      <div id="yearPillWrap">
+        <p style="font-size:.78rem; font-weight:600; color:var(--muted); margin:0 0 6px 0;">Choose year / session</p>
+        <div class="pill-row" id="resourceYearPills"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-pad" style="padding-top:28px;">
+    <div class="container">
+      <div id="resourceResults"></div>
+      <div id="resourceEmpty" class="empty-state" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <h4>Nothing here yet</h4>
+        <p>Try another subject or course name, or pick a different semester.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SOCIETIES  (76+ DU colleges → societies → competitions)
+     ============================================================ -->
+<section id="societies" class="page">
+  <div style="background:var(--purple-950); padding:44px 0 60px 0;">
+    <div class="container">
+      <p class="eyebrow" style="color:var(--purple-500);">Societies</p>
+      <h1 style="color:var(--white); font-size:clamp(1.7rem,4vw,2.2rem);">Find your college's societies</h1>
+      <p style="color:rgba(255,255,255,.65); max-width:56ch;">Search any Delhi University college to see its societies, what they do, and which competitions are open for registration right now.</p>
+      <div style="position:relative; max-width:560px; margin-top:20px;">
+        <div class="searchbar on-dark">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="collegeSearchInput" placeholder="Search your college — try &quot;SRCC&quot; or &quot;Hindu&quot;" autocomplete="off">
+          <button class="clear-btn" onclick="clearCollegeSearch()" aria-label="Clear search">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div id="collegeAutocomplete" class="autocomplete-panel"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-pad" style="padding-top:32px;">
+    <div class="container">
+      <div id="collegePromptState">
+        <p style="font-size:.78rem; font-weight:600; color:var(--muted); margin-bottom:10px;">Popular colleges</p>
+        <div class="pill-row" id="popularCollegePills"></div>
+      </div>
+
+      <div id="collegeSelectedState" style="display:none;">
+        <button class="btn btn-outline btn-sm" onclick="clearCollegeSearch()" style="margin-bottom:18px;">← All colleges</button>
+        <h2 id="selectedCollegeName" style="font-size:1.6rem;"></h2>
+        <p id="selectedCollegeCampus" style="color:var(--muted); margin-top:-8px;"></p>
+        <div id="societiesGrid" class="grid-cards" style="margin-top:20px;"></div>
+        <div id="societiesEmpty" class="empty-state" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <h4>Society directory coming soon for this college</h4>
+          <p>We haven't added this college's societies yet. Know them? Send us the list and we'll add it.</p>
+          <a href="#contact" data-route="contact" class="btn btn-primary btn-sm">Suggest societies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT US
+     ============================================================ -->
+<section id="contact" class="page">
+  <div class="section-pad">
+    <div class="container">
+      <p class="eyebrow">Contact Us</p>
+      <h1 style="font-size:clamp(1.7rem,4vw,2.2rem);">We're one message away</h1>
+      <p style="max-width:56ch; color:var(--muted);">Facing an issue, or have a question about notes, PYQs or your course? Reach us on whichever platform is easiest for you.</p>
+
+      <div class="grid-cards" style="margin-top:28px;">
+        <a href="https://whatsapp.com/channel/0029Vb4IpYP65yDHsuVNDn2D" target="_blank" rel="noopener" class="item-card fold" style="text-decoration:none;">
+          <div class="item-icon" style="background:linear-gradient(135deg,#25D366,#1DA851);"><svg viewBox="0 0 24 24" width="22" height="22" fill="white"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2 22l5.44-1.36a9.9 9.9 0 0 0 4.6 1.14h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.1a8.14 8.14 0 0 1-4.15-1.13l-.3-.18-3.08.77.82-3-.2-.31a8.15 8.15 0 0 1-1.25-4.34c0-4.5 3.66-8.16 8.17-8.16 4.5 0 8.16 3.66 8.16 8.16 0 4.51-3.66 8.19-8.17 8.19z"/></svg></div>
+          <div class="item-body"><p class="name">WhatsApp Channel</p><p style="font-size:.82rem; color:var(--muted); margin:0;">Follow for updates &amp; free PYQ drops</p></div>
+        </a>
+        <a href="https://www.instagram.com/apninotess" target="_blank" rel="noopener" class="item-card fold" style="text-decoration:none;">
+          <div class="item-icon" style="background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF);"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></div>
+          <div class="item-body"><p class="name">Instagram</p><p style="font-size:.82rem; color:var(--muted); margin:0;">@apninotess</p></div>
+        </a>
+        <a href="mailto:info@apninotes.com" class="item-card fold" style="text-decoration:none;">
+          <div class="item-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div>
+          <div class="item-body"><p class="name">Email</p><p style="font-size:.82rem; color:var(--muted); margin:0;">info@apninotes.com</p></div>
+        </a>
+        <a href="https://www.linkedin.com/company/apninotes/" target="_blank" rel="noopener" class="item-card fold" style="text-decoration:none;">
+          <div class="item-icon" style="background:#0A66C2;"><svg viewBox="0 0 24 24" width="19" height="19" fill="white"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56z"/></svg></div>
+          <div class="item-body"><p class="name">LinkedIn</p><p style="font-size:.82rem; color:var(--muted); margin:0;">ApniNotes — company page</p></div>
+        </a>
+      </div>
+
+      <div class="note-banner" style="margin-top:18px;">
+        Two emails show up on the current ApniNotes site — <code>hello@apninotes.com</code> and <code>info@apninotes.com</code>. This page uses <code>info@apninotes.com</code>; tell me if the other one is correct and I'll swap it.
+      </div>
+
+      <h2 style="font-size:1.4rem; margin-top:52px;">Course-wise WhatsApp Groups</h2>
+      <p style="color:var(--muted); margin-top:-8px;">Join your course's group for solved PYQs, notes and updates on new uploads.</p>
+      <div id="whatsappGroupsGrid" class="grid-cards" style="margin-top:18px;"></div>
+      <div class="note-banner" style="margin-top:18px;">
+        The group links below are placeholders (<code>#</code>) — send me the real invite link for each course and I'll wire them in.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:12px;">
+          <img src="assets/logo.png" alt="ApniNotes logo" style="height:28px;width:auto;">
+          <span class="brand-word" style="color:var(--white);">Apni<span>Notes</span></span>
+        </div>
+        <p style="max-width:32ch; font-size:.85rem;">Built for students, by students. Notes, PYQs, courses and your college's societies — all in one place.</p>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <a href="#home" data-route="home">Home</a>
+        <a href="#courses" data-route="courses">Courses</a>
+        <a href="#free-resources" data-route="free-resources">Free Resources</a>
+        <a href="#societies" data-route="societies">Societies</a>
+      </div>
+      <div>
+        <h5>Connect</h5>
+        <a href="https://www.instagram.com/apninotess" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://whatsapp.com/channel/0029Vb4IpYP65yDHsuVNDn2D" target="_blank" rel="noopener">WhatsApp Channel</a>
+        <a href="https://www.linkedin.com/company/apninotes/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:info@apninotes.com">Email</a>
+      </div>
+      <div>
+        <h5>Get the app</h5>
+        <a href="#" onclick="buyOnApp('footer');return false;">Download for Android</a>
+        <a href="#contact" data-route="contact">Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ApniNotes. All rights reserved.</span>
+      <span>Made with ❤️ for DU students</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     MODAL: PDF / RESOURCE VIEWER
+     ============================================================ -->
+<div class="modal-overlay" id="pdfModalOverlay">
+  <div class="modal-box wide">
+    <button class="modal-close" onclick="closeModal('pdfModalOverlay')" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="modal-hero">
+      <p class="eyebrow" style="color:var(--purple-500);">PDF</p>
+      <h3 id="pdfModalTitle" style="color:var(--white); margin:0;">Document</h3>
+    </div>
+    <div id="pdfModalBody"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     MODAL: COURSE / SUBJECT DETAIL
+     ============================================================ -->
+<div class="modal-overlay" id="courseModalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('courseModalOverlay')" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="modal-hero">
+      <p class="eyebrow" style="color:var(--purple-500);" id="courseModalMeta">Category · Semester</p>
+      <h3 id="courseModalName" style="color:var(--white);">Subject Name</h3>
+    </div>
+    <div class="modal-body">
+      <div class="tab-row">
+        <button class="tab-btn active" id="courseTabOverviewBtn" onclick="setCourseModalTab('overview')">Overview</button>
+        <button class="tab-btn" id="courseTabContentBtn" onclick="setCourseModalTab('content')">Content</button>
+      </div>
+      <div id="courseTabOverview" style="margin-top:18px;">
+        <div class="empty-state" style="background:var(--purple-50); text-align:left; padding:18px;">
+          <p style="margin:0; color:var(--ink);">❤️ A note from us</p>
+          <p style="font-size:.85rem; margin-top:6px;" id="courseModalNote">About this course…</p>
+        </div>
+      </div>
+      <div id="courseTabContent" style="margin-top:18px; display:none;">
+        <div class="card-list" id="courseModalContentList"></div>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:24px; padding-top:20px; border-top:1px solid var(--line);">
+        <div>
+          <div class="item-price"><span class="now" id="courseModalPriceNow" style="font-size:1.3rem;"></span></div>
+          <span class="was" id="courseModalPriceWas"></span>
+        </div>
+        <button class="btn btn-dark" id="courseModalBuyBtn">Buy Now on App →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     MODAL: SOCIETY DETAIL
+     ============================================================ -->
+<div class="modal-overlay" id="societyModalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('societyModalOverlay')" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="modal-hero">
+      <p class="eyebrow" style="color:var(--purple-500);" id="societyModalCollege">College Name</p>
+      <h3 id="societyModalName" style="color:var(--white);">Society Name</h3>
+    </div>
+    <div class="modal-body">
+      <p id="societyModalAbout" style="color:var(--muted);"></p>
+      <div id="societyModalCompetitionWrap"></div>
+    </div>
+  </div>
+</div>
+
+<script src="github-config.js"></script>
+<script>
+/* ============================================================
+   CONFIG — a few placeholders that only Aditi can fill in.
+   Search "REPLACE" in this file to find every one of them.
+   ============================================================ */
+const CONFIG = {
+  appScheme: 'apninotes://open',                               // TODO: register this custom scheme (or an Android App Link) inside FlutterFlow's Deep Linking settings — this is what lets the button open the installed app.
+  appFallbackUrl: 'https://apninotes.com/ApniNotes_2.0.apk',    // Live today: direct APK download. Swap for the Play Store URL the day ApniNotes goes live there.
+  leadershipApplyUrl: '#',                                     // TODO: paste the real Leadership Program 2026 Google Form link here.
+  redirectDelayMs: 1800
+};
+
+const PROGRAMS = [
+  'B.Com (Hons)','B.Com Programme','B.A. (Hons) Economics','B.A. (Hons) Political Science',
+  'B.A. (Hons) History','B.A. (Hons) Geography','B.A. (Hons) English','B.A. (Hons) Sociology',
+  'B.A. Programme','B.Sc (Hons) Computer Science'
+];
+const SEMESTERS = [1,2,3,4,5,6];
+const CATEGORIES = ['CORE','SEC','AEC','VAC','GE'];
+
+/* Master subject catalogue — also powers Free Resources.
+   Subject names follow standard DU paper titles. price/mrp/drive IDs
+   are SAMPLE data — replace with your real pricing and Google Drive links. */
+const SAMPLE_SUBJECTS = [
+ {id:'s01',name:'Financial Accounting',program:'B.Com (Hons)',semester:1,category:'CORE',price:99,mrp:199,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null},{year:2024,session:'End Sem',url:null}]},
+ {id:'s02',name:'Business Laws',program:'B.Com (Hons)',semester:1,category:'CORE',price:89,mrp:179,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null}]},
+ {id:'s03',name:'Business Organisation & Management',program:'B.Com (Hons)',semester:1,category:'CORE',price:89,mrp:179,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null},{year:2023,session:'End Sem',url:null}]},
+ {id:'s04',name:'Business English & Communication',program:'B.Com (Hons)',semester:1,category:'SEC',price:59,mrp:119,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null}]},
+ {id:'s05',name:'Corporate Accounting',program:'B.Com (Hons)',semester:2,category:'CORE',price:99,mrp:199,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null},{year:2024,session:'End Sem',url:null}]},
+ {id:'s06',name:'Business Statistics',program:'B.Com (Hons)',semester:2,category:'CORE',price:99,mrp:199,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null}]},
+ {id:'s07',name:'Company Law',program:'B.Com (Hons)',semester:2,category:'CORE',price:89,mrp:179,
+  syllabusUrl:null,pyq:[{year:2024,session:'End Sem',url:null}]},
+ {id:'s08',name:'Income Tax Law & Practice',program:'B.Com (Hons)',semester:3,category:'CORE',price:109,mrp:219,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null},{year:2024,session:'End Sem',url:null}]},
+ {id:'s09',name:'Human Resource Management',program:'B.Com (Hons)',semester:3,category:'CORE',price:89,mrp:179,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null}]},
+ {id:'s10',name:'Environmental Science',program:'B.Com (Hons)',semester:3,category:'AEC',price:49,mrp:99,
+  syllabusUrl:null,pyq:[{year:2024,session:'End Sem',url:null}]},
+ {id:'s11',name:'Cost Accounting',program:'B.Com (Hons)',semester:4,category:'CORE',price:99,mrp:199,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null},{year:2023,session:'End Sem',url:null}]},
+ {id:'s12',name:'Corporate Tax Planning',program:'B.Com (Hons)',semester:4,category:'CORE',price:99,mrp:199,
+  syllabusUrl:null,pyq:[{year:2024,session:'End Sem',url:null}]},
+ {id:'s13',name:'Management Accounting',program:'B.Com (Hons)',semester:5,category:'CORE',price:109,mrp:219,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null}]},
+ {id:'s14',name:'Fundamentals of Financial Management',program:'B.Com (Hons)',semester:5,category:'CORE',price:109,mrp:219,
+  syllabusUrl:null,pyq:[{year:2024,session:'End Sem',url:null}]},
+ {id:'s15',name:'Fundamentals of Investment',program:'B.Com (Hons)',semester:6,category:'CORE',price:99,mrp:199,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null}]},
+ {id:'s16',name:'Auditing & Corporate Governance',program:'B.Com (Hons)',semester:6,category:'CORE',price:99,mrp:199,
+  syllabusUrl:null,pyq:[{year:2024,session:'End Sem',url:null}]},
+ {id:'s17',name:'Introductory Microeconomics',program:'B.A. (Hons) Economics',semester:1,category:'CORE',price:99,mrp:199,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null},{year:2024,session:'End Sem',url:null}]},
+ {id:'s18',name:'Mathematical Methods for Economics',program:'B.A. (Hons) Economics',semester:2,category:'CORE',price:109,mrp:219,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null}]},
+ {id:'s19',name:'Data Analysis (Digital Empowerment)',program:'B.A. (Hons) Economics',semester:2,category:'SEC',price:59,mrp:119,
+  syllabusUrl:null,pyq:[{year:2024,session:'End Sem',url:null}]},
+ {id:'s20',name:'Understanding Political Theory',program:'B.A. (Hons) Political Science',semester:1,category:'CORE',price:89,mrp:179,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null}]},
+ {id:'s21',name:'History of India — I',program:'B.A. (Hons) History',semester:1,category:'CORE',price:89,mrp:179,
+  syllabusUrl:null,pyq:[{year:2025,session:'End Sem',url:null}]},
+ {id:'s22',name:'Geomorphology',program:'B.A. (Hons) Geography',semester:1,category:'CORE',price:89,mrp:179,
+  syllabusUrl:null,pyq:[{year:2024,session:'End Sem',url:null}]}
+];
+
+const SAMPLE_COMBOS = [
+ {id:'c01',name:'B.Com (Hons) — Semester 1 Full Combo',program:'B.Com (Hons)',semester:1,subjectCount:4,price:299,mrp:599},
+ {id:'c02',name:'B.Com (Hons) — Semester 3 Full Combo',program:'B.Com (Hons)',semester:3,subjectCount:3,price:249,mrp:499},
+ {id:'c03',name:'B.A. (Hons) Economics — Semester 1 Combo',program:'B.A. (Hons) Economics',semester:1,subjectCount:2,price:179,mrp:359},
+ {id:'c04',name:'Complete B.Com (Hons) — All 6 Semesters',program:'B.Com (Hons)',semester:null,subjectCount:16,price:1499,mrp:2999}
+];
+
+/* ============================================================
+   LIVE DATA — SUBJECTS/COMBOS start out as the sample catalogue
+   above. If github-config.js has your username/repo filled in,
+   tryLoadLiveData() fetches data/data.json straight from your
+   GitHub repo (raw.githubusercontent.com, free, no key needed
+   to READ a public repo) and overwrites the samples before the
+   page renders. No repo connected yet? Site just keeps using the
+   samples — nothing breaks.
+   ============================================================ */
+let SUBJECTS = SAMPLE_SUBJECTS.slice();
+let COMBOS = SAMPLE_COMBOS.slice();
+let usingLiveData = false;
+
+async function tryLoadLiveData(){
+  if(typeof GITHUB_READY === 'undefined' || !GITHUB_READY) return;
+  try{
+    const url = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/data/data.json?t=${Date.now()}`;
+    const res = await fetch(url, {cache:'no-store'});
+    if(!res.ok) throw new Error('data.json fetch failed: ' + res.status);
+    const data = await res.json();
+    if(Array.isArray(data.subjects) && data.subjects.length){ SUBJECTS = data.subjects; usingLiveData = true; }
+    if(Array.isArray(data.combos) && data.combos.length){ COMBOS = data.combos; }
+  }catch(e){
+    console.warn('Could not load live data from GitHub — showing sample courses instead.', e);
+  }
+}
+
+/* ============================================================
+   DELHI UNIVERSITY COLLEGES
+   Real, verified college names (checked against current DU college
+   listings, July 2026). The commonly-cited "76" figure is out of
+   date — DU currently has ~91 affiliated colleges; this list covers
+   65 of the ones offering BA/BSc/BCom undergraduate programmes
+   (the ones ApniNotes' students actually search for). Add any
+   missing college as {name, campus, aliases:[...]}.
+   ============================================================ */
+const COLLEGES = [
+ {name:'Aditi Mahavidyalaya',campus:'North Campus',aliases:['aditi']},
+ {name:'Daulat Ram College',campus:'North Campus',aliases:['drc']},
+ {name:'Hindu College',campus:'North Campus',aliases:['hindu']},
+ {name:'Hansraj College',campus:'North Campus',aliases:['hansraj','hrc']},
+ {name:'Indraprastha College for Women',campus:'North Campus',aliases:['ip college','ipcw','ip']},
+ {name:'Kirori Mal College',campus:'North Campus',aliases:['kmc','kirori mal']},
+ {name:'Miranda House',campus:'North Campus',aliases:['mh','miranda']},
+ {name:'Ramjas College',campus:'North Campus',aliases:['ramjas']},
+ {name:"St. Stephen's College",campus:'North Campus',aliases:['stephens','st stephens']},
+ {name:'Shri Ram College of Commerce',campus:'North Campus',aliases:['srcc']},
+ {name:'Sri Guru Tegh Bahadur Khalsa College',campus:'North Campus',aliases:['sgtb','khalsa']},
+ {name:'Swami Shraddhanand College',campus:'North Campus',aliases:['ssc','shraddhanand']},
+ {name:'Bhagini Nivedita College',campus:'West Campus',aliases:['bnc','nivedita']},
+ {name:'Bharati College',campus:'West Campus',aliases:['bharati']},
+ {name:'Bhaskaracharya College of Applied Science',campus:'West Campus',aliases:['bcas']},
+ {name:'Deen Dayal Upadhyaya College',campus:'West Campus',aliases:['ddu']},
+ {name:'Janki Devi Memorial College',campus:'West Campus',aliases:['jdmc']},
+ {name:'Kalindi College',campus:'West Campus',aliases:['kalindi']},
+ {name:'Keshav Mahavidyalaya',campus:'West Campus',aliases:['keshav']},
+ {name:'Lakshmibai College',campus:'West Campus',aliases:['lakshmibai','lbc']},
+ {name:'Rajdhani College',campus:'West Campus',aliases:['rajdhani']},
+ {name:'Satyawati College',campus:'West Campus',aliases:['satyawati']},
+ {name:'Satyawati College (Evening)',campus:'West Campus',aliases:['satyawati evening']},
+ {name:'Shivaji College',campus:'West Campus',aliases:['shivaji']},
+ {name:'Shyama Prasad Mukherji College',campus:'West Campus',aliases:['spm','spmc']},
+ {name:'Sri Guru Gobind Singh College of Commerce',campus:'West Campus',aliases:['sggscc','ggscc']},
+ {name:'Aryabhatta College',campus:'Dhaula Kuan Campus',aliases:['aryabhatta']},
+ {name:'Atma Ram Sanatan Dharma College',campus:'Dhaula Kuan Campus',aliases:['arsd']},
+ {name:'Delhi College of Arts & Commerce',campus:'Dhaula Kuan Campus',aliases:['dcac']},
+ {name:'Jesus & Mary College',campus:'Dhaula Kuan Campus',aliases:['jmc']},
+ {name:'Maitreyi College',campus:'Dhaula Kuan Campus',aliases:['maitreyi']},
+ {name:'Motilal Nehru College',campus:'Dhaula Kuan Campus',aliases:['mlnc']},
+ {name:'Motilal Nehru College (Evening)',campus:'Dhaula Kuan Campus',aliases:['mlnc evening']},
+ {name:'Ram Lal Anand College',campus:'Dhaula Kuan Campus',aliases:['rla']},
+ {name:'Sri Venkateswara College',campus:'Dhaula Kuan Campus',aliases:['venky','venkateswara']},
+ {name:'Acharya Narendra Dev College',campus:'South Campus',aliases:['andc']},
+ {name:'College of Vocational Studies',campus:'South Campus',aliases:['cvs']},
+ {name:'Deshbandhu College',campus:'South Campus',aliases:['deshbandhu']},
+ {name:'Dyal Singh College',campus:'South Campus',aliases:['dyal singh']},
+ {name:'Dyal Singh College (Evening)',campus:'South Campus',aliases:['dyal singh evening']},
+ {name:'Gargi College',campus:'South Campus',aliases:['gargi']},
+ {name:'Institute of Home Economics',campus:'South Campus',aliases:['ihe']},
+ {name:'Kamala Nehru College',campus:'South Campus',aliases:['knc','kamala nehru']},
+ {name:'Lady Shri Ram College for Women',campus:'South Campus',aliases:['lsr']},
+ {name:'P.G.D.A.V. College',campus:'South Campus',aliases:['pgdav']},
+ {name:'P.G.D.A.V. College (Evening)',campus:'South Campus',aliases:['pgdav evening']},
+ {name:'Ramanujan College',campus:'South Campus',aliases:['ramanujan']},
+ {name:'Sri Aurobindo College',campus:'South Campus',aliases:['aurobindo']},
+ {name:'Sri Aurobindo College (Evening)',campus:'South Campus',aliases:['aurobindo evening']},
+ {name:'Shaheed Bhagat Singh College',campus:'South Campus',aliases:['sbs']},
+ {name:'Shaheed Bhagat Singh College (Evening)',campus:'South Campus',aliases:['sbsec','sbs evening']},
+ {name:'Dr. Bhim Rao Ambedkar College',campus:'East Campus',aliases:['ambedkar']},
+ {name:'Shaheed Rajguru College of Applied Sciences for Women',campus:'East Campus',aliases:['rajguru']},
+ {name:'Shaheed Sukhdev College of Business Studies',campus:'East Campus',aliases:['sscbs','sukhdev']},
+ {name:'Maharaja Agrasen College',campus:'East Campus',aliases:['mac','agrasen']},
+ {name:'Shyam Lal College',campus:'East Campus',aliases:['shyam lal']},
+ {name:'Shyam Lal College (Evening)',campus:'East Campus',aliases:['shyam lal evening']},
+ {name:'Vivekananda College',campus:'East Campus',aliases:['vivekananda']},
+ {name:'Maharishi Valmiki College of Education',campus:'East Campus',aliases:['valmiki']},
+ {name:'Lady Irwin College',campus:'Central Campus',aliases:['lady irwin']},
+ {name:'Mata Sundri College for Women',campus:'Central Campus',aliases:['mata sundri']},
+ {name:'Sri Guru Nanak Dev Khalsa College',campus:'Central Campus',aliases:['guru nanak','sgndkc']},
+ {name:'Zakir Husain Delhi College',campus:'Central Campus',aliases:['zakir husain','zhdc']},
+ {name:'Zakir Husain Delhi College (Evening)',campus:'Central Campus',aliases:['zhdc evening']},
+ {name:'College of Arts',campus:'Central Campus',aliases:['coa']}
+];
+
+/* ============================================================
+   SOCIETIES — keyed by exact college name from COLLEGES above.
+   Hindu College and Kamala Nehru College lists are the colleges'
+   own published society names. SRCC and Ramjas are partial —
+   both have more societies than listed here. Any college not
+   listed below will show a "coming soon" empty state.
+   ============================================================ */
+const SOCIETIES = {
+ 'Hindu College': [
+  {name:'Earthlings — The Wildlife Society',tag:'Environment',about:'Runs wildlife-awareness drives, nature walks and conservation-themed events.'},
+  {name:'Enactus',tag:'Entrepreneurship',about:'Part of the global Enactus network — social enterprise projects that combine business thinking with community impact.'},
+  {name:'English Debating Society',tag:'Debating',about:"Hindu College's English-language debating circuit — parliamentary debates, MUNs and inter-college competitions."},
+  {name:'Friends Corner',tag:'Peer Support',about:'A peer-support and mentorship group for students settling into college life.'},
+  {name:'Ibtida — The Dramatics Society',tag:'Theatre',about:'Founded by filmmaker Imtiaz Ali during his time at the college. Performs both stage and street plays.',
+   competition:null},
+  {name:'Panchtatva — The Environmental Society',tag:'Environment',about:'Organises sustainability campaigns and environment-themed events on campus.'},
+  {name:'Manthan — The Quizzing Society',tag:'Quizzing',about:'Hosts quiz competitions and represents the college at inter-college quizzing meets.'},
+  {name:'Masque — The English Dramatics Society',tag:'Theatre',about:'English-language theatre and stage productions.'},
+  {name:'Nakshtra — The Fashion Society',tag:'Fashion',about:'Choreographs fashion shows and styling showcases for college fests.'},
+  {name:'NCC — National Cadet Corps',tag:'National',about:"The college wing of India's National Cadet Corps — discipline, training and service."},
+  {name:'NSS — National Service Scheme',tag:'National',about:'Community-service wing running outreach and volunteering programmes.'},
+  {name:'Srijya — The Choreography Society',tag:'Dance',about:"The college's dance and choreography society, performing at fests across DU."},
+  {name:'Samhita — Language, Literature & Cultural Society',tag:'Literary',about:'Celebrates language, literature and cultural traditions through events and publications.'},
+  {name:'The Science Forum',tag:'Academic',about:'Runs science talks, project showcases and department-level academic events.'},
+  {name:'Scribe — The Creative Writing Society',tag:'Literary',about:'A space for poetry and prose — runs open mics and writing workshops.'},
+  {name:'Spic Macay',tag:'Music & Culture',about:'Chapter of the national body promoting Indian classical music, dance and culture among youth.'},
+  {name:'Symposium — Parliament of the Republic of Hindu College',tag:'Parliamentary',about:"The college's student-parliament society."},
+  {name:'Vivre — The Film & Photographic Society',tag:'Photography & Film',about:'Runs photo-walks, screenings and photography competitions.'},
+  {name:'वाग्मी हिंदी वाद-विवाद समिति',tag:'Debating (Hindi)',about:"Hindu College's Hindi-language debating society."},
+  {name:'The Finance & Investment Cell',tag:'Finance',about:'Covers markets, investing and finance case-study competitions.'},
+  {name:'Buniyaad — The Civil Services Society',tag:'Civil Services',about:'Supports students preparing for UPSC and other civil services exams.'},
+  {name:'E-Cell Hindu',tag:'Entrepreneurship',about:"The college's entrepreneurship cell — startup talks, pitch events and founder meetups."}
+ ],
+ 'Kamala Nehru College': [
+  {name:'Hindi Debating Society',tag:'Debating (Hindi)',about:'Hindi-language parliamentary and traditional debate formats.'},
+  {name:'Choreography Society',tag:'Dance',about:'Competitive and fest-circuit dance performances.'},
+  {name:'Entrepreneurship Cell',tag:'Entrepreneurship',about:'Startup talks, pitch events and incubation support for student founders.'},
+  {name:'Book Club',tag:'Literary',about:'Reading circles and book discussions through the year.'},
+  {name:'Consumer Club',tag:'Academic',about:'Consumer-rights awareness and related departmental activities.'},
+  {name:'English Debating Society',tag:'Debating',about:'English-language debating and MUN-style events.'},
+  {name:'Western Dance Society',tag:'Dance',about:'Western dance forms — competitive fest circuit performances.'},
+  {name:'Creative Writing Society',tag:'Literary',about:'Poetry, prose and scriptwriting workshops and open mics.'},
+  {name:'Fashion Society',tag:'Fashion',about:'Styling, ramp shows and fest fashion showcases.'},
+  {name:'Eco Club',tag:'Environment',about:'Campus sustainability and environmental-awareness drives.'},
+  {name:'Quiz Society',tag:'Quizzing',about:'Inter-college quizzing competitions and campus quiz nights.'},
+  {name:'Fine Arts Society',tag:'Visual Arts',about:'Painting, sketching and visual-art showcases.'},
+  {name:'Theatre Society',tag:'Theatre',about:'Stage and street-play productions.'},
+  {name:'Indian Dance Society',tag:'Dance',about:'Classical and folk Indian dance forms.'},
+  {name:'Indian Music Society',tag:'Music',about:'Indian classical and semi-classical music performances.'},
+  {name:'Photography Society',tag:'Photography',about:'Photo-walks and photography competitions.'},
+  {name:'Film Society',tag:'Film',about:'Screenings, film discussions and short-film competitions.'}
+ ],
+ 'Shri Ram College of Commerce': [
+  {name:'The Commerce Society',tag:'Commerce',about:'One of SRCC\u2019s oldest societies, known for its annual fest BizStreet and the Shri Ram Commerce Summit.',
+   competition:{name:'Example: Recruitment Drive 2026 (sample data)',note:'This card is a demo of the competition feature — replace with a real, currently-open competition and its actual registration link before publishing.',registerUrl:'#'}},
+  {name:'The Marketing Society',tag:'Marketing',about:'Focuses on branding, market research and corporate communication — runs the Shri Ram Management Olympiad and Shri Ram Townhall.'}
+ ],
+ 'Ramjas College': [
+  {name:'Ramjas Debating Society (Hindi Wing)',tag:'Debating (Hindi)',about:'A long-running Hindi debating society; has previously organised national-level events such as Kapil Ratnu and Vaak Vyuh.'}
+ ]
+};
+/* Note: SRCC has six registered societies in total — only two are confirmed
+   above. Ramjas, Hansraj, Kirori Mal and others have active societies too;
+   add them the same way as the entries above once you have the real names. */
+
+/* ============================================================
+   COURSE-WISE WHATSAPP GROUPS (Contact Us)
+   All links are placeholders — paste real invite links before publishing.
+   ============================================================ */
+const WHATSAPP_GROUPS = PROGRAMS.map(p => ({course:p, link:'#'}));
+
+/* ============================================================
+   SMALL HELPERS
+   ============================================================ */
+function money(n){ return '\u20B9' + n; }
+function iconSvg(){
+  return '<svg viewBox="0 0 100 100"><path d="M50 8 L89 88 Q92 94 85 94 L15 94 Q8 94 11 88 Z M50 52 L61 94 L39 94 Z" fill="white" fill-rule="evenodd"/></svg>';
+}
+function openModal(id){ document.getElementById(id).classList.add('show'); document.body.style.overflow='hidden'; }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); document.body.style.overflow=''; }
+function pillBtn(label, active, onClick){
+  const b = document.createElement('button');
+  b.className = 'pill-btn' + (active ? ' active' : '');
+  b.textContent = label;
+  b.onclick = function(){
+    this.parentElement.querySelectorAll('.pill-btn').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+    onClick();
+  };
+  return b;
+}
+
+/* ============================================================
+   ROUTING
+   ============================================================ */
+const VALID_ROUTES = ['home','courses','free-resources','societies','contact'];
+function navigate(route){
+  if(!VALID_ROUTES.includes(route)) route = 'home';
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(route).classList.add('active');
+  document.querySelectorAll('[data-route]').forEach(el=>el.classList.toggle('active', el.dataset.route===route));
+  window.scrollTo(0,0);
+}
+function handleHashRoute(){ navigate((location.hash||'#home').slice(1)); }
+window.addEventListener('hashchange', handleHashRoute);
+
+/* ============================================================
+   BUY ON APP — opens the installed app via a custom URL scheme;
+   if nothing happens (app not installed) it falls back automatically.
+   ============================================================ */
+function buyOnApp(context, itemId){
+  let hidden = false;
+  const onHide = () => { if(document.hidden) hidden = true; };
+  document.addEventListener('visibilitychange', onHide);
+  window.location.href = CONFIG.appScheme + (itemId ? ('/' + itemId) : '');
+  setTimeout(() => {
+    document.removeEventListener('visibilitychange', onHide);
+    if(!hidden){ window.open(CONFIG.appFallbackUrl, '_blank'); }
+  }, CONFIG.redirectDelayMs);
+}
+
+/* ============================================================
+   COURSES
+   ============================================================ */
+let courseState = {semester:'all', category:'all'};
+
+function initCoursesUI(){
+  const sel = document.getElementById('programSelect');
+  PROGRAMS.forEach(p=>{
+    const o = document.createElement('option'); o.value = p; o.textContent = p; sel.appendChild(o);
+  });
+  sel.addEventListener('change', filterCourses);
+
+  const semWrap = document.getElementById('semesterPills');
+  semWrap.appendChild(pillBtn('All Sem', true, ()=>{courseState.semester='all';filterCourses();}));
+  SEMESTERS.forEach(s => semWrap.appendChild(pillBtn('Sem '+s, false, ()=>{courseState.semester=s;filterCourses();})));
+
+  const catWrap = document.getElementById('categoryPills');
+  catWrap.appendChild(pillBtn('All Categories', true, ()=>{courseState.category='all';filterCourses();}));
+  CATEGORIES.forEach(c => catWrap.appendChild(pillBtn(c, false, ()=>{courseState.category=c;filterCourses();})));
+
+  document.getElementById('courseSearchInput').addEventListener('input', filterCourses);
+}
+
+function filterCourses(){
+  const q = document.getElementById('courseSearchInput').value.trim().toLowerCase();
+  const program = document.getElementById('programSelect').value;
+  const list = SUBJECTS.filter(s=>{
+    if(program && s.program !== program) return false;
+    if(courseState.semester !== 'all' && s.semester !== Number(courseState.semester)) return false;
+    if(courseState.category !== 'all' && s.category !== courseState.category) return false;
+    if(q && !s.name.toLowerCase().includes(q) && !s.program.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  renderSubjects(list);
+  renderCombos();
+}
+
+function renderSubjects(list){
+  const wrap = document.getElementById('subjectsList');
+  const empty = document.getElementById('subjectsEmpty');
+  document.getElementById('subjectsCount').textContent = list.length + (list.length===1?' subject':' subjects');
+  if(list.length === 0){ wrap.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display = 'none';
+  wrap.innerHTML = list.map(s => `
+    <div class="item-card" onclick="openCourseModal('${s.id}')" style="cursor:pointer;">
+      <div class="item-icon">${iconSvg()}</div>
+      <div class="item-body">
+        <p class="name">${s.name}</p>
+        <div class="item-meta"><span>${s.program}</span><span>·</span><span>Sem ${s.semester}</span><span class="chip">${s.category}</span></div>
+      </div>
+      <div class="item-price"><div class="now">${money(s.price)}</div><span class="was">${money(s.mrp)}</span></div>
+      <button class="open-btn" onclick="event.stopPropagation();buyOnApp('subject','${s.id}')">Buy Now on App</button>
+    </div>`).join('');
+}
+
+function renderCombos(){
+  const program = document.getElementById('programSelect').value;
+  const list = COMBOS.filter(c => !program || c.program === program);
+  const wrap = document.getElementById('combosList');
+  wrap.innerHTML = list.map(c => `
+    <div class="item-card featured" onclick="buyOnApp('combo','${c.id}')" style="cursor:pointer;">
+      <div class="item-icon">${iconSvg()}</div>
+      <div class="item-body">
+        <p class="name">${c.name}</p>
+        <div class="item-meta"><span>${c.subjectCount} subjects</span>${c.semester?('<span>·</span><span>Sem '+c.semester+'</span>'):''}</div>
+      </div>
+      <div class="item-price"><div class="now">${money(c.price)}</div><span class="was">${money(c.mrp)}</span></div>
+      <button class="open-btn" onclick="event.stopPropagation();buyOnApp('combo','${c.id}')">Buy Now on App</button>
+    </div>`).join('') || '<p style="color:var(--muted);">No combo pack for this programme yet.</p>';
+}
+
+function openCourseModal(id){
+  const s = SUBJECTS.find(x=>x.id===id);
+  if(!s) return;
+  document.getElementById('courseModalMeta').textContent = s.category + ' · Semester ' + s.semester;
+  document.getElementById('courseModalName').textContent = s.name;
+  document.getElementById('courseModalNote').textContent = 'Hi! These ' + s.name + ' notes combine the DU syllabus with solved PYQs and exam-focused tips, kept simple and in one place.';
+  document.getElementById('courseModalPriceNow').textContent = money(s.price);
+  document.getElementById('courseModalPriceWas').textContent = money(s.mrp);
+  document.getElementById('courseModalBuyBtn').onclick = () => buyOnApp('course-modal', s.id);
+  document.getElementById('courseModalContentList').innerHTML = ['Roadmap','Notes','Video Lecture','Important Questions','PYQ Solutions','Free Resources'].map(item => {
+    const isVideo = item === 'Video Lecture';
+    const clickable = isVideo && s.videoUrl;
+    return `<div class="item-card" style="cursor:${clickable?'pointer':'default'};" ${clickable ? `onclick="window.open('${s.videoUrl}','_blank')"` : ''}>
+      <div class="item-icon">${iconSvg()}</div><div class="item-body"><p class="name">${item}</p></div>
+      ${clickable ? '<span class="chip chip-off">Watch</span>' : ''}
+    </div>`;
+  }).join('');
+  setCourseModalTab('overview');
+  openModal('courseModalOverlay');
+}
+function setCourseModalTab(tab){
+  document.getElementById('courseTabOverviewBtn').classList.toggle('active', tab==='overview');
+  document.getElementById('courseTabContentBtn').classList.toggle('active', tab==='content');
+  document.getElementById('courseTabOverview').style.display = tab==='overview' ? 'block' : 'none';
+  document.getElementById('courseTabContent').style.display = tab==='content' ? 'block' : 'none';
+}
+
+/* ============================================================
+   FREE RESOURCES
+   ============================================================ */
+let resourceState = {tab:'pyq', semester:'all', year:'all'};
+
+function initResourcesUI(){
+  const semWrap = document.getElementById('resourceSemesterPills');
+  semWrap.appendChild(pillBtn('All', true, ()=>{resourceState.semester='all';filterResources();}));
+  SEMESTERS.forEach(s => semWrap.appendChild(pillBtn('Sem '+s, false, ()=>{resourceState.semester=s;filterResources();})));
+  renderYearPills();
+  document.getElementById('resourceSearchInput').addEventListener('input', filterResources);
+}
+
+function renderYearPills(){
+  const years = Array.from(new Set(SUBJECTS.flatMap(s=>s.pyq.map(p=>p.year)))).sort((a,b)=>b-a);
+  const yWrap = document.getElementById('resourceYearPills');
+  yWrap.appendChild(pillBtn('All Years', true, ()=>{resourceState.year='all';filterResources();}));
+  years.forEach(y => yWrap.appendChild(pillBtn(String(y), false, ()=>{resourceState.year=y;filterResources();})));
+}
+
+function setResourceTab(tab){
+  resourceState.tab = tab;
+  document.getElementById('tabPyqBtn').classList.toggle('active', tab==='pyq');
+  document.getElementById('tabSyllabusBtn').classList.toggle('active', tab==='syllabus');
+  document.getElementById('yearPillWrap').style.display = tab==='pyq' ? 'block' : 'none';
+  filterResources();
+}
+
+function filterResources(){
+  const q = document.getElementById('resourceSearchInput').value.trim().toLowerCase();
+  const list = SUBJECTS.filter(s=>{
+    if(resourceState.semester !== 'all' && s.semester !== Number(resourceState.semester)) return false;
+    if(q && !s.name.toLowerCase().includes(q) && !s.program.toLowerCase().includes(q)) return false;
+    if(resourceState.tab === 'pyq' && resourceState.year !== 'all' && !s.pyq.some(p=>p.year===Number(resourceState.year))) return false;
+    return true;
+  });
+  renderResourceResults(list);
+}
+
+function renderResourceResults(list){
+  const wrap = document.getElementById('resourceResults');
+  const empty = document.getElementById('resourceEmpty');
+  if(list.length === 0){ wrap.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display = 'none';
+  wrap.innerHTML = list.map(s=>{
+    let items;
+    if(resourceState.tab === 'syllabus'){
+      items = `<div class="item-card" onclick="openResourceViewer('${s.id}','syllabus')" style="cursor:pointer;">
+        <div class="item-icon">${iconSvg()}</div><div class="item-body"><p class="name">Complete Syllabus</p></div>
+        <button class="open-btn">Open</button></div>`;
+    } else {
+      let pyqs = s.pyq;
+      if(resourceState.year !== 'all') pyqs = pyqs.filter(p=>p.year===Number(resourceState.year));
+      items = pyqs.map((p,idx) => `
+        <div class="item-card" onclick="openResourceViewer('${s.id}','pyq',${idx})" style="cursor:pointer;">
+          <div class="item-icon">${iconSvg()}</div><div class="item-body"><p class="name">${p.session} ${p.year}</p></div>
+          <button class="open-btn">Open</button></div>`).join('') || '<p style="color:var(--muted-light);font-size:.85rem;">No PYQ for the selected year.</p>';
+    }
+    return `<div style="margin-bottom:28px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+        <strong style="font-family:var(--font-display);">${s.name}</strong>
+        <span class="chip">${s.program} · Sem ${s.semester}</span>
+      </div>
+      <div class="card-list">${items}</div>
+    </div>`;
+  }).join('');
+}
+
+function openResourceViewer(subjectId, kind, pyqIdx){
+  const s = SUBJECTS.find(x=>x.id===subjectId);
+  if(!s) return;
+  let title, url;
+  if(kind === 'syllabus'){ title = s.name + ' — Syllabus'; url = s.syllabusUrl; }
+  else { const p = s.pyq[pyqIdx]; title = s.name + ' — ' + p.session + ' ' + p.year; url = p.url; }
+  document.getElementById('pdfModalTitle').textContent = title;
+  const body = document.getElementById('pdfModalBody');
+  if(!url){
+    body.innerHTML = `<div style="margin:24px; padding:18px; background:var(--purple-50); border-radius:var(--radius-md);">
+      <p style="margin:0;font-family:var(--font-display);font-weight:600;">No PDF uploaded yet</p>
+      <p style="font-size:.85rem;margin-top:6px;color:var(--muted);">${usingLiveData ? 'Upload this file from the admin panel (admin.html) and it will open right here.' : 'This is sample data — once your admin panel is connected, PDFs uploaded there will open right here automatically.'}</p>
+    </div>`;
+  } else {
+    const embedUrl = url.includes('drive.google.com') ? url.replace('/view','/preview') : url;
+    body.innerHTML = `<iframe class="modal-pdf-frame" src="${embedUrl}" allow="autoplay"></iframe>`;
+  }
+  openModal('pdfModalOverlay');
+}
+
+/* ============================================================
+   SOCIETIES
+   ============================================================ */
+function initSocietiesUI(){
+  renderPopularColleges();
+  const input = document.getElementById('collegeSearchInput');
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    const panel = document.getElementById('collegeAutocomplete');
+    panel.innerHTML = '';
+    if(!q){ panel.classList.remove('show'); return; }
+    const hits = COLLEGES.filter(c => c.name.toLowerCase().includes(q) || c.aliases.some(a=>a.includes(q))).slice(0,8);
+    if(hits.length === 0){
+      const d = document.createElement('div');
+      d.style.cssText = 'padding:14px 20px;color:var(--muted);font-size:.85rem;';
+      d.textContent = 'No college matches — check the spelling?';
+      panel.appendChild(d);
+    } else {
+      hits.forEach(c=>{
+        const btn = document.createElement('button');
+        const nameSpan = document.createElement('span'); nameSpan.textContent = c.name;
+        const campusSpan = document.createElement('span'); campusSpan.className='campus-tag'; campusSpan.textContent = c.campus;
+        btn.appendChild(nameSpan); btn.appendChild(campusSpan);
+        btn.onclick = () => selectCollege(c.name);
+        panel.appendChild(btn);
+      });
+    }
+    panel.classList.add('show');
+  });
+  document.addEventListener('click', (e) => {
+    if(!e.target.closest('#collegeSearchInput') && !e.target.closest('#collegeAutocomplete')){
+      document.getElementById('collegeAutocomplete').classList.remove('show');
+    }
+  });
+}
+
+function renderPopularColleges(){
+  const names = ['Hindu College','Kamala Nehru College','Shri Ram College of Commerce','Ramjas College',
+    'Lady Shri Ram College for Women','Hansraj College','Kirori Mal College','Shaheed Bhagat Singh College (Evening)'];
+  const wrap = document.getElementById('popularCollegePills');
+  names.forEach(n => {
+    const b = document.createElement('button');
+    b.className = 'pill-btn';
+    b.textContent = n;
+    b.onclick = () => selectCollege(n);
+    wrap.appendChild(b);
+  });
+}
+
+function selectCollege(name){
+  const college = COLLEGES.find(c=>c.name===name);
+  if(!college) return;
+  document.getElementById('collegeSearchInput').value = name;
+  document.getElementById('collegeAutocomplete').classList.remove('show');
+  document.getElementById('collegePromptState').style.display = 'none';
+  document.getElementById('collegeSelectedState').style.display = 'block';
+  document.getElementById('selectedCollegeName').textContent = college.name;
+  document.getElementById('selectedCollegeCampus').textContent = college.campus;
+  const societies = SOCIETIES[name] || [];
+  const grid = document.getElementById('societiesGrid');
+  const empty = document.getElementById('societiesEmpty');
+  grid.innerHTML = '';
+  if(societies.length === 0){ empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  societies.forEach((soc, idx) => {
+    const card = document.createElement('div');
+    card.className = 'society-card';
+    card.style.cursor = 'pointer';
+    card.onclick = () => openSocietyModal(name, idx);
+    const tag = document.createElement('div'); tag.className='stag'; tag.textContent = soc.tag;
+    const sname = document.createElement('div'); sname.className='sname'; sname.textContent = soc.name;
+    const p = document.createElement('p'); p.textContent = soc.about;
+    card.appendChild(tag); card.appendChild(sname); card.appendChild(p);
+    if(soc.competition){
+      const cbadge = document.createElement('span');
+      cbadge.className = 'chip chip-off';
+      cbadge.style.cssText = 'margin-top:10px;display:inline-block;';
+      cbadge.textContent = '🏆 Competition open';
+      card.appendChild(cbadge);
+    }
+    grid.appendChild(card);
+  });
+}
+
+function clearCollegeSearch(){
+  document.getElementById('collegeSearchInput').value = '';
+  document.getElementById('collegeAutocomplete').classList.remove('show');
+  document.getElementById('collegePromptState').style.display = 'block';
+  document.getElementById('collegeSelectedState').style.display = 'none';
+}
+
+function openSocietyModal(collegeName, idx){
+  const soc = SOCIETIES[collegeName][idx];
+  document.getElementById('societyModalCollege').textContent = collegeName + ' · ' + soc.tag;
+  document.getElementById('societyModalName').textContent = soc.name;
+  document.getElementById('societyModalAbout').textContent = soc.about;
+  const wrap = document.getElementById('societyModalCompetitionWrap');
+  if(soc.competition){
+    wrap.innerHTML = `<div style="background:var(--purple-50);border-radius:var(--radius-md);padding:18px;">
+      <p style="margin:0;font-family:var(--font-display);font-weight:600;">🏆 ${soc.competition.name}</p>
+      <p style="font-size:.85rem;color:var(--muted);margin-top:6px;">${soc.competition.note || ''}</p>
+      <a href="${soc.competition.registerUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-top:10px;">Register Now →</a>
+    </div>`;
+  } else {
+    wrap.innerHTML = '<p style="color:var(--muted-light);font-size:.85rem;">No competitions open right now — check back soon.</p>';
+  }
+  openModal('societyModalOverlay');
+}
+
+/* ============================================================
+   CONTACT US — WhatsApp groups
+   ============================================================ */
+function renderWhatsappGroups(){
+  const wrap = document.getElementById('whatsappGroupsGrid');
+  wrap.innerHTML = WHATSAPP_GROUPS.map(g => `
+    <a href="${g.link}" target="_blank" rel="noopener" class="item-card fold" style="text-decoration:none;">
+      <div class="item-icon" style="background:linear-gradient(135deg,#25D366,#1DA851);">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2 22l5.44-1.36a9.9 9.9 0 0 0 4.6 1.14h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2z"/></svg>
+      </div>
+      <div class="item-body"><p class="name">${g.course}</p><p style="font-size:.8rem;color:var(--muted);margin:0;">Tap to join group</p></div>
+    </a>`).join('');
+}
+
+/* ============================================================
+   MODAL close-on-backdrop-click + INIT
+   ============================================================ */
+document.querySelectorAll('.modal-overlay').forEach(ov=>{
+  ov.addEventListener('click', e=>{ if(e.target===ov) closeModal(ov.id); });
+});
+
+async function init(){
+  await tryLoadLiveData();
+  document.getElementById('leadershipApplyBtn').href = CONFIG.leadershipApplyUrl;
+  initCoursesUI();  filterCourses();
+  initResourcesUI(); filterResources();
+  initSocietiesUI();
+  renderWhatsappGroups();
+  handleHashRoute();
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ApniNotes — Admin Panel</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple-950:#0D0D17; --purple-900:#1A1A2E; --purple-700:#5B2FE0; --purple-600:#7B4DFF;
+  --purple-500:#A56DFF; --purple-200:#D6BBFF; --purple-100:#EDE3FF; --purple-50:#F6F2FF;
+  --white:#FFFFFF; --ink:#1A1A2E; --muted:#6E6B84; --line:#E9E3FB;
+  --success-bg:#E4F9EE; --success:#189A5C; --danger:#E0455A; --danger-bg:#FCE8EA;
+  --font-display:'Poppins',sans-serif; --font-body:'Inter',sans-serif;
+  --radius-md:14px; --radius-pill:999px;
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0;font-family:var(--font-body);background:var(--purple-50);color:var(--ink);line-height:1.5;}
+h1,h2,h3{font-family:var(--font-display);margin:0 0 .4em 0;}
+button{font-family:var(--font-body);cursor:pointer;}
+input,select{font-size:.92rem;font-family:var(--font-body);}
+.container{max-width:920px;margin:0 auto;padding:28px 20px 60px 20px;}
+.hidden{display:none !important;}
+
+/* Login screen */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--purple-900),var(--purple-950));padding:20px;}
+.login-card{background:var(--white);border-radius:20px;padding:40px 34px;max-width:380px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.35);}
+.login-card img{height:40px;margin-bottom:14px;}
+.login-card h1{font-size:1.3rem;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:.8rem;font-weight:600;margin-bottom:6px;color:var(--muted);}
+.field input,.field select{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--white);}
+.field input:focus,.field select:focus{outline:2px solid var(--purple-500);border-color:transparent;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-display);font-weight:600;font-size:.9rem;padding:11px 22px;border-radius:var(--radius-pill);border:none;transition:transform .1s ease;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:linear-gradient(135deg,var(--purple-600),var(--purple-700));color:var(--white);}
+.btn-block{width:100%;}
+.btn-outline{background:transparent;border:1.5px solid var(--purple-200);color:var(--purple-700);}
+.btn-danger{background:var(--danger-bg);color:var(--danger);}
+.btn-sm{padding:7px 16px;font-size:.78rem;}
+.error-msg{color:var(--danger);font-size:.83rem;margin-top:8px;min-height:18px;}
+
+/* Dashboard */
+.admin-header{background:var(--purple-950);color:var(--white);padding:18px 0;position:sticky;top:0;z-index:10;}
+.admin-header .container{display:flex;align-items:center;justify-content:space-between;padding-top:0;padding-bottom:0;}
+.admin-header .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;}
+.admin-header img{height:28px;}
+.tab-row{display:flex;gap:10px;margin:22px 0 18px 0;}
+.tab-btn{padding:10px 20px;border-radius:var(--radius-pill);border:1.5px solid var(--line);background:var(--white);font-family:var(--font-display);font-weight:600;font-size:.85rem;color:var(--muted);}
+.tab-btn.active{background:var(--purple-600);border-color:var(--purple-600);color:var(--white);}
+
+.card{background:var(--white);border-radius:var(--radius-md);padding:22px;box-shadow:0 4px 18px rgba(26,26,46,.06);margin-bottom:18px;}
+.card h2{font-size:1.05rem;display:flex;align-items:center;justify-content:space-between;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+@media (max-width:640px){.row2,.row3{grid-template-columns:1fr;}}
+
+table{width:100%;border-collapse:collapse;font-size:.86rem;}
+th{text-align:left;padding:10px 8px;color:var(--muted);font-family:var(--font-display);font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;border-bottom:1.5px solid var(--line);}
+td{padding:12px 8px;border-bottom:1px solid var(--line);}
+tr:last-child td{border-bottom:none;}
+.pyq-row{display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:10px;align-items:center;margin-bottom:8px;}
+.file-status{font-size:.78rem;color:var(--success);}
+.file-status.pending{color:var(--muted);}
+.chip{display:inline-block;font-size:.7rem;font-weight:600;padding:3px 10px;border-radius:var(--radius-pill);background:var(--purple-100);color:var(--purple-700);}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--purple-950);color:white;padding:12px 24px;border-radius:var(--radius-pill);font-size:.85rem;box-shadow:0 10px 30px rgba(0,0,0,.3);z-index:999;}
+.note{background:var(--purple-100);border:1px dashed var(--purple-500);border-radius:10px;padding:12px 16px;font-size:.8rem;color:var(--purple-700);margin-bottom:16px;}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="loginScreen" class="login-wrap">
+  <div class="login-card">
+    <img src="assets/logo.png" alt="ApniNotes">
+    <h1>Admin Panel</h1>
+    <p style="color:var(--muted);font-size:.85rem;margin-top:-8px;">Connect your GitHub repo to manage subjects, combos, PDFs and videos. No Firebase, no card — everything is saved straight into your GitHub repo.</p>
+    <div class="field"><label>GitHub Username</label><input type="text" id="loginOwner" placeholder="e.g. eooapninotes"></div>
+    <div class="field"><label>Repository Name</label><input type="text" id="loginRepo" placeholder="e.g. apninotes-website"></div>
+    <div class="field"><label>Personal Access Token</label><input type="password" id="loginToken" placeholder="ghp_... or github_pat_..."></div>
+    <button class="btn btn-primary btn-block" onclick="doLogin()">Connect &amp; Log In</button>
+    <p class="error-msg" id="loginError"></p>
+    <p class="note" style="margin-top:18px;">First time here? See GITHUB_SETUP.md for step-by-step instructions to create a free fine-grained token scoped to only this repo. Your token stays saved only in this browser (localStorage) — never share the admin.html link publicly.</p>
+  </div>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div id="dashboard" class="hidden">
+  <div class="admin-header">
+    <div class="container">
+      <div class="brand"><img src="assets/logo.png" alt=""><span>ApniNotes Admin</span></div>
+      <button class="btn btn-outline btn-sm" onclick="doLogout()" style="color:white;border-color:rgba(255,255,255,.3);">Log Out</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="note" id="setupNote"></div>
+
+    <div class="tab-row">
+      <button class="tab-btn active" id="tabSubjectsBtn" onclick="setAdminTab('subjects')">Subjects</button>
+      <button class="tab-btn" id="tabCombosBtn" onclick="setAdminTab('combos')">Combos</button>
+    </div>
+
+    <!-- ===== SUBJECTS TAB ===== -->
+    <div id="subjectsTab">
+      <div class="card">
+        <h2 id="subjectFormTitle">Add a New Subject</h2>
+        <div class="row3">
+          <div class="field"><label>Subject Name</label><input id="f_name" placeholder="e.g. Financial Accounting"></div>
+          <div class="field"><label>Programme</label>
+            <select id="f_program"></select>
+          </div>
+          <div class="field"><label>Semester</label>
+            <select id="f_semester"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+          </div>
+        </div>
+        <div class="row3">
+          <div class="field"><label>Category</label>
+            <select id="f_category"><option>CORE</option><option>SEC</option><option>AEC</option><option>VAC</option><option>GE</option></select>
+          </div>
+          <div class="field"><label>Price (₹)</label><input id="f_price" type="number" placeholder="99"></div>
+          <div class="field"><label>MRP / Strike-through price (₹)</label><input id="f_mrp" type="number" placeholder="199"></div>
+        </div>
+
+        <div class="field">
+          <label>Syllabus PDF</label>
+          <input type="file" id="f_syllabusFile" accept="application/pdf">
+          <p class="file-status pending" id="f_syllabusStatus">No file uploaded yet</p>
+        </div>
+
+        <div class="field">
+          <label>Video Lecture (paste the YouTube link — set the video to "Unlisted" on YouTube first)</label>
+          <input id="f_video" placeholder="https://youtube.com/watch?v=...">
+        </div>
+
+        <div class="field">
+          <label>Previous Year Question Papers (PYQs)</label>
+          <div id="pyqRows"></div>
+          <button class="btn btn-outline btn-sm" onclick="addPyqRow()">+ Add a Year</button>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:20px;">
+          <button class="btn btn-primary" onclick="saveSubject()">Save Subject</button>
+          <button class="btn btn-outline" id="cancelEditBtn" onclick="resetSubjectForm()">Cancel</button>
+        </div>
+        <p class="error-msg" id="subjectFormError"></p>
+      </div>
+
+      <div class="card">
+        <h2>All Subjects <span class="chip" id="subjectCountChip">0</span></h2>
+        <table>
+          <thead><tr><th>Name</th><th>Programme</th><th>Sem</th><th>Price</th><th></th></tr></thead>
+          <tbody id="subjectsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== COMBOS TAB ===== -->
+    <div id="combosTab" class="hidden">
+      <div class="card">
+        <h2 id="comboFormTitle">Add a New Combo</h2>
+        <div class="row2">
+          <div class="field"><label>Combo Name</label><input id="c_name" placeholder="e.g. B.Com Hons — Semester 1 Full Combo"></div>
+          <div class="field"><label>Programme</label><select id="c_program"></select></div>
+        </div>
+        <div class="row3">
+          <div class="field"><label>Semester (leave blank for "all semesters")</label><input id="c_semester" type="number" placeholder="1"></div>
+          <div class="field"><label>Number of Subjects Included</label><input id="c_count" type="number" placeholder="4"></div>
+          <div class="field"><label>Price (₹)</label><input id="c_price" type="number" placeholder="299"></div>
+        </div>
+        <div class="field" style="max-width:200px;"><label>MRP (₹)</label><input id="c_mrp" type="number" placeholder="599"></div>
+        <div style="display:flex; gap:10px; margin-top:8px;">
+          <button class="btn btn-primary" onclick="saveCombo()">Save Combo</button>
+          <button class="btn btn-outline" onclick="resetComboForm()">Cancel</button>
+        </div>
+        <p class="error-msg" id="comboFormError"></p>
+      </div>
+
+      <div class="card">
+        <h2>All Combos <span class="chip" id="comboCountChip">0</span></h2>
+        <table>
+          <thead><tr><th>Name</th><th>Programme</th><th>Price</th><th></th></tr></thead>
+          <tbody id="combosTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script>
+/* ============================================================
+   GITHUB API BACKEND — no Firebase, no card, ever.
+   Your GitHub username / repo / token are entered once on the
+   login screen and saved only in this browser's localStorage.
+   Every Save/Delete here commits directly to data/data.json (and
+   PDFs to files/syllabus or files/pyq) in your GitHub repo. The
+   live website reads that same data/data.json file.
+   ============================================================ */
+let OWNER = '', REPO = '', TOKEN = '';
+const BRANCH = 'main';
+
+function ghHeaders(){
+  return { 'Authorization': 'token ' + TOKEN, 'Accept': 'application/vnd.github+json' };
+}
+async function ghGetFile(path){
+  const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}?ref=${BRANCH}&_=${Date.now()}`;
+  const res = await fetch(url, { headers: ghHeaders() });
+  if(res.status === 404) return null;
+  if(!res.ok) throw new Error('GitHub error ' + res.status + ': ' + (await res.text()));
+  return await res.json();
+}
+async function ghPutFile(path, base64Content, sha, message){
+  const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`;
+  const body = { message: message || ('Update ' + path), content: base64Content, branch: BRANCH };
+  if(sha) body.sha = sha;
+  const res = await fetch(url, { method:'PUT', headers: {...ghHeaders(), 'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  if(!res.ok) throw new Error('GitHub save failed ' + res.status + ': ' + (await res.text()));
+  return await res.json();
+}
+function b64EncodeUnicode(str){ return btoa(unescape(encodeURIComponent(str))); }
+function b64DecodeUnicode(str){ return decodeURIComponent(escape(atob(str))); }
+function arrayBufferToBase64(buffer){
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const chunkSize = 0x8000;
+  for(let i=0;i<bytes.length;i+=chunkSize){
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
+  }
+  return btoa(binary);
+}
+async function fileToBase64(file){ return arrayBufferToBase64(await file.arrayBuffer()); }
+
+/* ---------- DATA LOAD/SAVE (data/data.json) ---------- */
+let dataSha = null;
+async function loadData(){
+  const f = await ghGetFile('data/data.json');
+  if(!f){ subjectsCache = []; combosCache = []; dataSha = null; return; }
+  dataSha = f.sha;
+  const parsed = JSON.parse(b64DecodeUnicode(f.content.replace(/\n/g,'')));
+  subjectsCache = parsed.subjects || [];
+  combosCache = parsed.combos || [];
+}
+async function saveData(message){
+  const payload = JSON.stringify({subjects: subjectsCache, combos: combosCache}, null, 2);
+  const result = await ghPutFile('data/data.json', b64EncodeUnicode(payload), dataSha, message);
+  dataSha = result.content.sha;
+}
+
+/* ---------- PDF UPLOAD (files/syllabus or files/pyq) ---------- */
+async function uploadPdf(file, path){
+  const existing = await ghGetFile(path);
+  const b64 = await fileToBase64(file);
+  await ghPutFile(path, b64, existing ? existing.sha : null, 'Upload ' + path);
+  return `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${path}`;
+}
+
+const PROGRAMS = ['B.Com (Hons)','B.Com Programme','B.A. (Hons) Economics','B.A. (Hons) Political Science',
+  'B.A. (Hons) History','B.A. (Hons) Geography','B.A. (Hons) English','B.A. (Hons) Sociology',
+  'B.A. Programme','B.Sc (Hons) Computer Science'];
+
+function populateSelects(){
+  ['f_program','c_program'].forEach(id=>{
+    const sel = document.getElementById(id);
+    sel.innerHTML = PROGRAMS.map(p=>`<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
+  });
+}
+function escapeHtml(s){ const d=document.createElement('div'); d.textContent = (s==null?'':String(s)); return d.innerHTML; }
+
+/* ---------- AUTH (GitHub owner/repo/token, saved in localStorage) ---------- */
+async function doLogin(){
+  const owner = document.getElementById('loginOwner').value.trim();
+  const repo = document.getElementById('loginRepo').value.trim();
+  const token = document.getElementById('loginToken').value.trim();
+  document.getElementById('loginError').textContent = '';
+  if(!owner || !repo || !token){
+    document.getElementById('loginError').textContent = 'Username, repo name and token are all required.';
+    return;
+  }
+  OWNER = owner; REPO = repo; TOKEN = token;
+  try{
+    const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}`, { headers: ghHeaders() });
+    if(!res.ok) throw new Error(res.status === 404 ? 'Repo not found — check the username and repo name.' : 'Token rejected — check it was copied correctly and has Contents read/write permission.');
+    localStorage.setItem('apninotes_gh', JSON.stringify({owner, repo, token}));
+    enterDashboard();
+  }catch(err){
+    document.getElementById('loginError').textContent = err.message;
+  }
+}
+function doLogout(){
+  localStorage.removeItem('apninotes_gh');
+  OWNER = ''; REPO = ''; TOKEN = '';
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('dashboard').classList.add('hidden');
+}
+async function enterDashboard(){
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('dashboard').classList.remove('hidden');
+  document.getElementById('setupNote').textContent = `Connected to ${OWNER}/${REPO}. Anything you save here commits straight to your GitHub repo and appears on the live website within a minute.`;
+  await loadData();
+  renderSubjectsTable();
+  renderCombosTable();
+}
+
+/* Auto-login if a token was saved earlier in this browser */
+(function tryAutoLogin(){
+  const saved = localStorage.getItem('apninotes_gh');
+  if(!saved) return;
+  try{
+    const {owner, repo, token} = JSON.parse(saved);
+    document.getElementById('loginOwner').value = owner;
+    document.getElementById('loginRepo').value = repo;
+    document.getElementById('loginToken').value = token;
+    OWNER = owner; REPO = repo; TOKEN = token;
+    enterDashboard();
+  }catch(e){ /* ignore corrupt storage */ }
+})();
+
+/* ---------- TABS ---------- */
+function setAdminTab(tab){
+  document.getElementById('tabSubjectsBtn').classList.toggle('active', tab==='subjects');
+  document.getElementById('tabCombosBtn').classList.toggle('active', tab==='combos');
+  document.getElementById('subjectsTab').classList.toggle('hidden', tab!=='subjects');
+  document.getElementById('combosTab').classList.toggle('hidden', tab!=='combos');
+}
+
+/* ---------- TOAST ---------- */
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.remove('hidden');
+  setTimeout(()=>t.classList.add('hidden'), 2600);
+}
+
+/* ---------- PYQ ROWS ---------- */
+let pyqEntries = [];
+function addPyqRow(prefill){
+  pyqEntries.push(prefill || {year:new Date().getFullYear(), session:'End Sem', file:null, existingUrl:null});
+  renderPyqRows();
+}
+function removePyqRow(idx){ pyqEntries.splice(idx,1); renderPyqRows(); }
+function renderPyqRows(){
+  const wrap = document.getElementById('pyqRows');
+  wrap.innerHTML = pyqEntries.map((p,idx)=>`
+    <div class="pyq-row">
+      <input type="number" value="${p.year}" onchange="pyqEntries[${idx}].year=Number(this.value)" placeholder="Year">
+      <input type="text" value="${escapeHtml(p.session)}" onchange="pyqEntries[${idx}].session=this.value" placeholder="Session e.g. End Sem">
+      <div>
+        <input type="file" accept="application/pdf" onchange="pyqEntries[${idx}].file=this.files[0]">
+        ${p.existingUrl ? '<span class="file-status">Existing file kept unless replaced</span>' : ''}
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="removePyqRow(${idx})">✕</button>
+    </div>`).join('') || '<p style="color:var(--muted);font-size:.82rem;">No PYQ years added yet.</p>';
+}
+
+/* ---------- SUBJECTS ---------- */
+let subjectsCache = [];
+let editingSubjectId = null;
+
+function renderSubjectsTable(){
+  subjectsCache.sort((a,b)=> (a.name||'').localeCompare(b.name||''));
+  document.getElementById('subjectCountChip').textContent = subjectsCache.length;
+  document.getElementById('subjectsTableBody').innerHTML = subjectsCache.map(s => `
+    <tr>
+      <td>${escapeHtml(s.name)}</td>
+      <td>${escapeHtml(s.program)}</td>
+      <td>Sem ${escapeHtml(s.semester)}</td>
+      <td>₹${escapeHtml(s.price)}</td>
+      <td style="white-space:nowrap;">
+        <button class="btn btn-outline btn-sm" onclick="editSubject('${s.id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteSubject('${s.id}')">Delete</button>
+      </td>
+    </tr>`).join('') || '<tr><td colspan="5" style="color:var(--muted);">No subjects yet — add your first one above.</td></tr>';
+}
+
+function editSubject(id){
+  const s = subjectsCache.find(x=>x.id===id);
+  if(!s) return;
+  editingSubjectId = id;
+  document.getElementById('subjectFormTitle').textContent = 'Edit Subject';
+  document.getElementById('f_name').value = s.name;
+  document.getElementById('f_program').value = s.program;
+  document.getElementById('f_semester').value = s.semester;
+  document.getElementById('f_category').value = s.category;
+  document.getElementById('f_price').value = s.price;
+  document.getElementById('f_mrp').value = s.mrp;
+  document.getElementById('f_video').value = s.videoUrl || '';
+  document.getElementById('f_syllabusStatus').textContent = s.syllabusUrl ? 'Existing file kept unless replaced' : 'No file uploaded yet';
+  document.getElementById('f_syllabusStatus').classList.toggle('pending', !s.syllabusUrl);
+  pyqEntries = (s.pyq||[]).map(p=>({year:p.year, session:p.session, file:null, existingUrl:p.url}));
+  renderPyqRows();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function resetSubjectForm(){
+  editingSubjectId = null;
+  document.getElementById('subjectFormTitle').textContent = 'Add a New Subject';
+  ['f_name','f_price','f_mrp','f_video'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f_syllabusFile').value = '';
+  document.getElementById('f_syllabusStatus').textContent = 'No file uploaded yet';
+  document.getElementById('f_syllabusStatus').classList.add('pending');
+  pyqEntries = [];
+  renderPyqRows();
+  document.getElementById('subjectFormError').textContent = '';
+}
+
+function makeId(prefix){ return prefix + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+async function saveSubject(){
+  const name = document.getElementById('f_name').value.trim();
+  const price = Number(document.getElementById('f_price').value);
+  const mrp = Number(document.getElementById('f_mrp').value);
+  if(!name || !price || !mrp){
+    document.getElementById('subjectFormError').textContent = 'Name, price and MRP are required.';
+    return;
+  }
+  document.getElementById('subjectFormError').textContent = 'Saving… this can take a moment if you are uploading PDFs.';
+
+  const id = editingSubjectId || makeId('s');
+  const existingSubject = subjectsCache.find(x=>x.id===editingSubjectId);
+  let syllabusUrl = existingSubject ? (existingSubject.syllabusUrl || null) : null;
+
+  try{
+    const syllabusFile = document.getElementById('f_syllabusFile').files[0];
+    if(syllabusFile){
+      syllabusUrl = await uploadPdf(syllabusFile, `files/syllabus/${id}.pdf`);
+    }
+
+    const pyq = [];
+    for(let i=0;i<pyqEntries.length;i++){
+      const p = pyqEntries[i];
+      let url = p.existingUrl || null;
+      if(p.file){
+        url = await uploadPdf(p.file, `files/pyq/${id}-${i}-${p.year}.pdf`);
+      }
+      pyq.push({year:Number(p.year), session:p.session||'End Sem', url: url});
+    }
+
+    const record = {
+      id, name, program: document.getElementById('f_program').value,
+      semester: Number(document.getElementById('f_semester').value),
+      category: document.getElementById('f_category').value,
+      price, mrp,
+      videoUrl: document.getElementById('f_video').value.trim() || null,
+      syllabusUrl, pyq
+    };
+
+    const idx = subjectsCache.findIndex(x=>x.id===id);
+    if(idx >= 0) subjectsCache[idx] = record; else subjectsCache.push(record);
+
+    await saveData((editingSubjectId ? 'Update' : 'Add') + ' subject: ' + name);
+
+    document.getElementById('subjectFormError').textContent = '';
+    showToast(editingSubjectId ? 'Subject updated!' : 'Subject added!');
+    resetSubjectForm();
+    renderSubjectsTable();
+  }catch(err){
+    document.getElementById('subjectFormError').textContent = 'Save failed: ' + err.message;
+  }
+}
+
+async function deleteSubject(id){
+  if(!confirm('Delete this subject? This cannot be undone.')) return;
+  subjectsCache = subjectsCache.filter(x=>x.id!==id);
+  try{
+    await saveData('Delete subject ' + id);
+    showToast('Subject deleted.');
+    renderSubjectsTable();
+  }catch(err){
+    alert('Delete failed: ' + err.message);
+  }
+}
+
+/* ---------- COMBOS ---------- */
+let combosCache = [];
+let editingComboId = null;
+
+function renderCombosTable(){
+  combosCache.sort((a,b)=> (a.name||'').localeCompare(b.name||''));
+  document.getElementById('comboCountChip').textContent = combosCache.length;
+  document.getElementById('combosTableBody').innerHTML = combosCache.map(c => `
+    <tr>
+      <td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.program)}</td><td>₹${escapeHtml(c.price)}</td>
+      <td style="white-space:nowrap;">
+        <button class="btn btn-outline btn-sm" onclick="editCombo('${c.id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCombo('${c.id}')">Delete</button>
+      </td>
+    </tr>`).join('') || '<tr><td colspan="4" style="color:var(--muted);">No combos yet.</td></tr>';
+}
+function editCombo(id){
+  const c = combosCache.find(x=>x.id===id);
+  if(!c) return;
+  editingComboId = id;
+  document.getElementById('comboFormTitle').textContent = 'Edit Combo';
+  document.getElementById('c_name').value = c.name;
+  document.getElementById('c_program').value = c.program;
+  document.getElementById('c_semester').value = c.semester || '';
+  document.getElementById('c_count').value = c.subjectCount;
+  document.getElementById('c_price').value = c.price;
+  document.getElementById('c_mrp').value = c.mrp;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function resetComboForm(){
+  editingComboId = null;
+  document.getElementById('comboFormTitle').textContent = 'Add a New Combo';
+  ['c_name','c_semester','c_count','c_price','c_mrp'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('comboFormError').textContent = '';
+}
+async function saveCombo(){
+  const name = document.getElementById('c_name').value.trim();
+  const price = Number(document.getElementById('c_price').value);
+  const mrp = Number(document.getElementById('c_mrp').value);
+  const subjectCount = Number(document.getElementById('c_count').value);
+  if(!name || !price || !mrp || !subjectCount){
+    document.getElementById('comboFormError').textContent = 'Name, subject count, price and MRP are required.';
+    return;
+  }
+  const semRaw = document.getElementById('c_semester').value;
+  const id = editingComboId || makeId('c');
+  const record = {
+    id, name, program: document.getElementById('c_program').value,
+    semester: semRaw ? Number(semRaw) : null,
+    subjectCount, price, mrp
+  };
+  const idx = combosCache.findIndex(x=>x.id===id);
+  if(idx >= 0) combosCache[idx] = record; else combosCache.push(record);
+
+  try{
+    await saveData((editingComboId ? 'Update' : 'Add') + ' combo: ' + name);
+    showToast(editingComboId ? 'Combo updated!' : 'Combo added!');
+    resetComboForm();
+    renderCombosTable();
+  }catch(err){
+    document.getElementById('comboFormError').textContent = 'Save failed: ' + err.message;
+  }
+}
+async function deleteCombo(id){
+  if(!confirm('Delete this combo?')) return;
+  combosCache = combosCache.filter(x=>x.id!==id);
+  try{
+    await saveData('Delete combo ' + id);
+    showToast('Combo deleted.');
+    renderCombosTable();
+  }catch(err){
+    alert('Delete failed: ' + err.message);
+  }
+}
+
+populateSelects();
+</script>
+</body>
+</html>
