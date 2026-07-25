@@ -189,24 +189,6 @@
           "url": null
         }
       ]
-    },
-    {
-      "id": "s10",
-      "name": "Environmental Science",
-      "program": "B.Com (Hons)",
-      "semester": 3,
-      "category": "AEC",
-      "price": 49,
-      "mrp": 99,
-      "syllabusUrl": null,
-      "videoUrl": null,
-      "pyq": [
-        {
-          "year": 2024,
-          "session": "End Sem",
-          "url": null
-        }
-      ]
     }
   ],
   "combos": [
