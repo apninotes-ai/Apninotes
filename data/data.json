@@ -348,24 +348,6 @@
           "url": null
         }
       ]
-    },
-    {
-      "id": "s18",
-      "name": "Mathematical Methods for Economics",
-      "program": "B.A. (Hons) Economics",
-      "semester": 2,
-      "category": "CORE",
-      "price": 109,
-      "mrp": 219,
-      "syllabusUrl": null,
-      "videoUrl": null,
-      "pyq": [
-        {
-          "year": 2025,
-          "session": "End Sem",
-          "url": null
-        }
-      ]
     }
   ],
   "combos": [
