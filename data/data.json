@@ -1,54 +1,463 @@
 {
   "subjects": [
-    {"id":"s01","name":"Financial Accounting","program":"B.Com (Hons)","semester":1,"category":"CORE","price":99,"mrp":199,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null},{"year":2024,"session":"End Sem","url":null}]},
-    {"id":"s02","name":"Business Laws","program":"B.Com (Hons)","semester":1,"category":"CORE","price":89,"mrp":179,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null}]},
-    {"id":"s03","name":"Business Organisation & Management","program":"B.Com (Hons)","semester":1,"category":"CORE","price":89,"mrp":179,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null},{"year":2023,"session":"End Sem","url":null}]},
-    {"id":"s04","name":"Business English & Communication","program":"B.Com (Hons)","semester":1,"category":"SEC","price":59,"mrp":119,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null}]},
-    {"id":"s05","name":"Corporate Accounting","program":"B.Com (Hons)","semester":2,"category":"CORE","price":99,"mrp":199,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null},{"year":2024,"session":"End Sem","url":null}]},
-    {"id":"s06","name":"Business Statistics","program":"B.Com (Hons)","semester":2,"category":"CORE","price":99,"mrp":199,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null}]},
-    {"id":"s07","name":"Company Law","program":"B.Com (Hons)","semester":2,"category":"CORE","price":89,"mrp":179,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2024,"session":"End Sem","url":null}]},
-    {"id":"s08","name":"Income Tax Law & Practice","program":"B.Com (Hons)","semester":3,"category":"CORE","price":109,"mrp":219,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null},{"year":2024,"session":"End Sem","url":null}]},
-    {"id":"s09","name":"Human Resource Management","program":"B.Com (Hons)","semester":3,"category":"CORE","price":89,"mrp":179,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null}]},
-    {"id":"s10","name":"Environmental Science","program":"B.Com (Hons)","semester":3,"category":"AEC","price":49,"mrp":99,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2024,"session":"End Sem","url":null}]},
-    {"id":"s11","name":"Cost Accounting","program":"B.Com (Hons)","semester":4,"category":"CORE","price":99,"mrp":199,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null},{"year":2023,"session":"End Sem","url":null}]},
-    {"id":"s12","name":"Corporate Tax Planning","program":"B.Com (Hons)","semester":4,"category":"CORE","price":99,"mrp":199,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2024,"session":"End Sem","url":null}]},
-    {"id":"s13","name":"Management Accounting","program":"B.Com (Hons)","semester":5,"category":"CORE","price":109,"mrp":219,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null}]},
-    {"id":"s14","name":"Fundamentals of Financial Management","program":"B.Com (Hons)","semester":5,"category":"CORE","price":109,"mrp":219,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2024,"session":"End Sem","url":null}]},
-    {"id":"s15","name":"Fundamentals of Investment","program":"B.Com (Hons)","semester":6,"category":"CORE","price":99,"mrp":199,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null}]},
-    {"id":"s16","name":"Auditing & Corporate Governance","program":"B.Com (Hons)","semester":6,"category":"CORE","price":99,"mrp":199,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2024,"session":"End Sem","url":null}]},
-    {"id":"s17","name":"Introductory Microeconomics","program":"B.A. (Hons) Economics","semester":1,"category":"CORE","price":99,"mrp":199,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null},{"year":2024,"session":"End Sem","url":null}]},
-    {"id":"s18","name":"Mathematical Methods for Economics","program":"B.A. (Hons) Economics","semester":2,"category":"CORE","price":109,"mrp":219,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null}]},
-    {"id":"s19","name":"Data Analysis (Digital Empowerment)","program":"B.A. (Hons) Economics","semester":2,"category":"SEC","price":59,"mrp":119,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2024,"session":"End Sem","url":null}]},
-    {"id":"s20","name":"Understanding Political Theory","program":"B.A. (Hons) Political Science","semester":1,"category":"CORE","price":89,"mrp":179,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null}]},
-    {"id":"s21","name":"History of India — I","program":"B.A. (Hons) History","semester":1,"category":"CORE","price":89,"mrp":179,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2025,"session":"End Sem","url":null}]},
-    {"id":"s22","name":"Geomorphology","program":"B.A. (Hons) Geography","semester":1,"category":"CORE","price":89,"mrp":179,
-      "syllabusUrl":null,"videoUrl":null,"pyq":[{"year":2024,"session":"End Sem","url":null}]}
+    {
+      "id": "s16",
+      "name": "Auditing & Corporate Governance",
+      "program": "B.Com (Hons)",
+      "semester": 6,
+      "category": "CORE",
+      "price": 99,
+      "mrp": 199,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2024,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s04",
+      "name": "Business English & Communication",
+      "program": "B.Com (Hons)",
+      "semester": 1,
+      "category": "SEC",
+      "price": 59,
+      "mrp": 119,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s02",
+      "name": "Business Laws",
+      "program": "B.Com (Hons)",
+      "semester": 1,
+      "category": "CORE",
+      "price": 89,
+      "mrp": 179,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s03",
+      "name": "Business Organisation & Management",
+      "program": "B.Com (Hons)",
+      "semester": 1,
+      "category": "CORE",
+      "price": 89,
+      "mrp": 179,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        },
+        {
+          "year": 2023,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s06",
+      "name": "Business Statistics",
+      "program": "B.Com (Hons)",
+      "semester": 2,
+      "category": "CORE",
+      "price": 99,
+      "mrp": 199,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s07",
+      "name": "Company Law",
+      "program": "B.Com (Hons)",
+      "semester": 2,
+      "category": "CORE",
+      "price": 89,
+      "mrp": 179,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2024,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s05",
+      "name": "chemistry",
+      "program": "B.Sc (Hons) Computer Science",
+      "semester": 2,
+      "category": "CORE",
+      "price": 99,
+      "mrp": 199,
+      "videoUrl": "https://www.youtube.com/watch?v=OgdjXYm-0is&list=RDzxE6btYmKF0&index=12",
+      "syllabusUrl": "https://raw.githubusercontent.com/apninotes-ai/apninotes/main/files/syllabus/s05.pdf",
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": "https://raw.githubusercontent.com/apninotes-ai/apninotes/main/files/pyq/s05-0-2025.pdf"
+        }
+      ]
+    },
+    {
+      "id": "s12",
+      "name": "Corporate Tax Planning",
+      "program": "B.Com (Hons)",
+      "semester": 4,
+      "category": "CORE",
+      "price": 99,
+      "mrp": 199,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2024,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s11",
+      "name": "Cost Accounting",
+      "program": "B.Com (Hons)",
+      "semester": 4,
+      "category": "CORE",
+      "price": 99,
+      "mrp": 199,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        },
+        {
+          "year": 2023,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s19",
+      "name": "Data Analysis (Digital Empowerment)",
+      "program": "B.A. (Hons) Economics",
+      "semester": 2,
+      "category": "SEC",
+      "price": 59,
+      "mrp": 119,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2024,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "name": "Environmental Science",
+      "program": "B.Com (Hons)",
+      "semester": 3,
+      "category": "AEC",
+      "price": 49,
+      "mrp": 99,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2024,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s01",
+      "name": "Financial Accounting",
+      "program": "B.Com (Hons)",
+      "semester": 1,
+      "category": "CORE",
+      "price": 99,
+      "mrp": 199,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        },
+        {
+          "year": 2024,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s14",
+      "name": "Fundamentals of Financial Management",
+      "program": "B.Com (Hons)",
+      "semester": 5,
+      "category": "CORE",
+      "price": 109,
+      "mrp": 219,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2024,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s15",
+      "name": "Fundamentals of Investment",
+      "program": "B.Com (Hons)",
+      "semester": 6,
+      "category": "CORE",
+      "price": 99,
+      "mrp": 199,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s22",
+      "name": "Geomorphology",
+      "program": "B.A. (Hons) Geography",
+      "semester": 1,
+      "category": "CORE",
+      "price": 89,
+      "mrp": 179,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2024,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s21",
+      "name": "History of India — I",
+      "program": "B.A. (Hons) History",
+      "semester": 1,
+      "category": "CORE",
+      "price": 89,
+      "mrp": 179,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s09",
+      "name": "Human Resource Management",
+      "program": "B.Com (Hons)",
+      "semester": 3,
+      "category": "CORE",
+      "price": 89,
+      "mrp": 179,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s08",
+      "name": "Income Tax Law & Practice",
+      "program": "B.Com (Hons)",
+      "semester": 3,
+      "category": "CORE",
+      "price": 109,
+      "mrp": 219,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        },
+        {
+          "year": 2024,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s17",
+      "name": "Introductory Microeconomics",
+      "program": "B.A. (Hons) Economics",
+      "semester": 1,
+      "category": "CORE",
+      "price": 99,
+      "mrp": 199,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        },
+        {
+          "year": 2024,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s13",
+      "name": "Management Accounting",
+      "program": "B.Com (Hons)",
+      "semester": 5,
+      "category": "CORE",
+      "price": 109,
+      "mrp": 219,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s18",
+      "name": "Mathematical Methods for Economics",
+      "program": "B.A. (Hons) Economics",
+      "semester": 2,
+      "category": "CORE",
+      "price": 109,
+      "mrp": 219,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    },
+    {
+      "id": "s20",
+      "name": "Understanding Political Theory",
+      "program": "B.A. (Hons) Political Science",
+      "semester": 1,
+      "category": "CORE",
+      "price": 89,
+      "mrp": 179,
+      "syllabusUrl": null,
+      "videoUrl": null,
+      "pyq": [
+        {
+          "year": 2025,
+          "session": "End Sem",
+          "url": null
+        }
+      ]
+    }
   ],
   "combos": [
-    {"id":"c01","name":"B.Com (Hons) — Semester 1 Full Combo","program":"B.Com (Hons)","semester":1,"subjectCount":4,"price":299,"mrp":599},
-    {"id":"c02","name":"B.Com (Hons) — Semester 3 Full Combo","program":"B.Com (Hons)","semester":3,"subjectCount":3,"price":249,"mrp":499},
-    {"id":"c03","name":"B.A. (Hons) Economics — Semester 1 Combo","program":"B.A. (Hons) Economics","semester":1,"subjectCount":2,"price":179,"mrp":359},
-    {"id":"c04","name":"Complete B.Com (Hons) — All 6 Semesters","program":"B.Com (Hons)","semester":null,"subjectCount":16,"price":1499,"mrp":2999}
+    {
+      "id": "c03",
+      "name": "B.A. (Hons) Economics — Semester 1 Combo",
+      "program": "B.A. (Hons) Economics",
+      "semester": 1,
+      "subjectCount": 2,
+      "price": 179,
+      "mrp": 359
+    },
+    {
+      "id": "c01",
+      "name": "B.Com (Hons) — Semester 1 Full Combo",
+      "program": "B.Com (Hons)",
+      "semester": 1,
+      "subjectCount": 4,
+      "price": 299,
+      "mrp": 599
+    },
+    {
+      "id": "c02",
+      "name": "B.Com (Hons) — Semester 3 Full Combo",
+      "program": "B.Com (Hons)",
+      "semester": 3,
+      "subjectCount": 3,
+      "price": 249,
+      "mrp": 499
+    },
+    {
+      "id": "c04",
+      "name": "Complete B.Com (Hons) — All 6 Semesters",
+      "program": "B.Com (Hons)",
+      "semester": null,
+      "subjectCount": 16,
+      "price": 1499,
+      "mrp": 2999
+    }
   ]
 }
