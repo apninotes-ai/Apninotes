@@ -248,24 +248,6 @@
           "url": null
         }
       ]
-    },
-    {
-      "id": "s09",
-      "name": "Human Resource Management",
-      "program": "B.Com (Hons)",
-      "semester": 3,
-      "category": "CORE",
-      "price": 89,
-      "mrp": 179,
-      "syllabusUrl": null,
-      "videoUrl": null,
-      "pyq": [
-        {
-          "year": 2025,
-          "session": "End Sem",
-          "url": null
-        }
-      ]
     }
   ],
   "combos": [
