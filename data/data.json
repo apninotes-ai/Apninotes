@@ -35,24 +35,6 @@
           "url": null
         }
       ]
-    },
-    {
-      "id": "s02",
-      "name": "Business Laws",
-      "program": "B.Com (Hons)",
-      "semester": 1,
-      "category": "CORE",
-      "price": 89,
-      "mrp": 179,
-      "syllabusUrl": null,
-      "videoUrl": null,
-      "pyq": [
-        {
-          "year": 2025,
-          "session": "End Sem",
-          "url": null
-        }
-      ]
     }
   ],
   "combos": [
