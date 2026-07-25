@@ -1,24 +1,5 @@
 {
-  "subjects": [
-    {
-      "id": "s16",
-      "name": "Auditing & Corporate Governance",
-      "program": "B.Com (Hons)",
-      "semester": 6,
-      "category": "CORE",
-      "price": 99,
-      "mrp": 199,
-      "syllabusUrl": null,
-      "videoUrl": null,
-      "pyq": [
-        {
-          "year": 2024,
-          "session": "End Sem",
-          "url": null
-        }
-      ]
-    }
-  ],
+  "subjects": [],
   "combos": [
     {
       "id": "c03",
