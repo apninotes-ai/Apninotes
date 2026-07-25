@@ -284,29 +284,6 @@
           "url": null
         }
       ]
-    },
-    {
-      "id": "s08",
-      "name": "Income Tax Law & Practice",
-      "program": "B.Com (Hons)",
-      "semester": 3,
-      "category": "CORE",
-      "price": 109,
-      "mrp": 219,
-      "syllabusUrl": null,
-      "videoUrl": null,
-      "pyq": [
-        {
-          "year": 2025,
-          "session": "End Sem",
-          "url": null
-        },
-        {
-          "year": 2024,
-          "session": "End Sem",
-          "url": null
-        }
-      ]
     }
   ],
   "combos": [
